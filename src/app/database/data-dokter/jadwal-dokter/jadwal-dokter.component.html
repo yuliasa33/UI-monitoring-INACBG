@@ -1,0 +1,54 @@
+<app-layout>
+  <div class="mb-2">
+    <p class="text-lg font-semibold text-gray-700">Jadwal Dokter</p>
+  </div>
+  <atom-card>
+    <div class="flex gap-x-4">
+      <div class="flex flex-col gap-y-2 min-w-[200px]">
+        <div class="w-full flex flex-col gap-y-2">
+          <p>Setup Jadwal</p>
+          <p-dropdown 
+            [options]="jenis_ruangan_data()" 
+            [(ngModel)]="selected_jenis_ruangan" 
+            placeholder="Pilih Jenis Ruangan" 
+            optionLabel="jenis_ruangan"
+            styleClass="w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-y-2">
+          <p>Jenis Poli</p>
+          <div class="flex flex-col gap-y-1 rounded-[8px] w-full min-h-[440px] p-2 border border-[#ced4da]">
+            <button 
+              *ngFor="let poli of poli_data()"
+              [title]="poli.nama_poli"
+              (click)="onSelectPoli(poli)"
+              class="flex-1 w-full p-2 rounded-[4px] text-gray-700 hover:bg-slate-100 focus:bg-blue-100 focus:text-blue-700 focus:font-semibold text-start overflow-hidden"
+            >
+              <p class="truncate min-w-0">
+                {{ poli.nama_poli }}
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-x-4 flex-1 w-full">
+        <div class="flex flex-col gap-y-2 w-2/3">
+          <p>Daftar Dokter - {{ selected_poli()?.nama_poli }}</p>
+          <app-mol-table 
+            [tableProps]="TableProps" 
+            (onSelectedRow)="selected_dokter.set($event.data)" 
+          />
+        </div>
+        
+        <div class="flex flex-col gap-y-2 w-auto flex-1">
+          <p>Jadwal Dokter - {{ jadwal_dokter_data()?.nama_dokter }}</p>
+          <app-jadwal-dokter-day 
+            [JadwalDokter]="jadwal_dokter_data()" 
+            (saveJadwal)="handleSaveJadwalDokter($event)" 
+            (deleteJadwal)="handleDeleteJadwal($event)"
+          />
+        </div>
+      </div>
+    </div>
+  </atom-card>
+</app-layout>

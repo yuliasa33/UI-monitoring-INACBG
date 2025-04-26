@@ -1,0 +1,17 @@
+{
+    "columns":[
+        {
+          "field": "full_name",
+          "header": "Nama Pasien"
+        },
+        {
+          "field": "no_rekam_medis",
+          "header": "No RM"
+        },
+        {
+          "field": "tgl_lahir",
+          "header": "Tgl Lahir",
+          "type": "date"
+        }
+      ]
+}

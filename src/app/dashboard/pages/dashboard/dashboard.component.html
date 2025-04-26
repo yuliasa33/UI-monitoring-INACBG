@@ -1,0 +1,280 @@
+<app-layout >
+    
+    <!-- <div class="grid grid-cols-3 gap-3 p-3 w-full">
+        <div class="box1 border-r-4 border-r-blue-400 bg-white rounded-lg py-4 px-4 shadow-md cursor-pointer hover:scale-105 hover:shadow-lg transition-all duration-400 w-full shadow-gray-200 h-[120px]">
+            <div class="flex flex-row gap-3 items-center px-4 w-full h-auto">
+                <i class="pi pi-users text-sky-600"></i>
+                <p class="text-lg text-sky-400">Data Pengguna Layanan</p>
+            </div>
+            <div class="flex flex-row gap-3 items-center  px-4 w-full h-auto">
+                <p class="text-2xl text-gray-400 mt-2">4219 Pengguna</p>
+            </div>
+        </div>
+        <div class="box1 border-r-4 border-r-blue-400 bg-white rounded-lg py-4 px-4 w-full shadow-md cursor-pointer shadow-gray-200 h-full hover:scale-105 hover:shadow-lg transition-all duration-400">
+            <div class="flex flex-row gap-3 items-center px-4 w-full h-auto">
+                <i class="pi pi-briefcase text-sky-600"></i>
+                <p class="text-lg text-sky-400">Entry Data per hari</p>
+            </div>
+            <div class="flex flex-row gap-3 items-center  px-4 w-full h-auto">
+                <p class="text-2xl text-gray-400 mt-2">102.490 Data</p>
+            </div>
+        </div>
+        <div class="box1 border-r-8 border-r-blue-400 bg-white rounded-lg py-4 px-4 w-full h-full cursor-pointer shadow-md shadow-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-400">
+            <div class="flex flex-row gap-3 items-center px-4 w-full h-auto">
+                <i class="pi pi-dollar text-sky-600"></i>
+                <p class="text-lg text-sky-400">Pemasukan</p>
+            </div>
+            <div class="flex flex-row gap-3 items-center  px-4 w-full h-auto">
+                <p class="text-2xl text-gray-400 mt-2">Rp. 234.890.000</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col w-full h-full gap-3  p-4">
+        <div class=" bg-white rounded-lg py-4 px-4 shadow-lg my-2 border-r-4 border-l-4 border-r-sky-400 border-l-sky-400 w-full shadow-gray-200 h-full">
+            <p class="text-2xl text-center">Grafik Penjualan</p>
+            <apx-chart [series]="apexLinechartOptions.series" [chart]="apexLinechartOptions.chaart" [title]="apexLinechartOptions.title"></apx-chart>
+        </div>
+        <div class="flex-row flex gap-3 w-full">
+            <div
+                class="flex flex-row justify-center items-center border-l-4 border-l-sky-400 border-t-4 border-t-sky-400 bg-white rounded-lg py-4 px-4 shadow-md my-2 w-6/12 shadow-gray-200 h-[400px]">
+                <div class="flex items-center justify-center w-full">
+                     <div class="chart-container">
+                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [title]="chartOptions.title" [xaxis]="chartOptions.xaxis" [responsive]="chartOptions.responsive"></apx-chart>
+                     </div>
+                  
+                </div>
+            </div>
+            <div
+                class="flex flex-row justify-center items-center bg-white border-b-sky-400 border-b-4 border-r-sky-400 border-r-4 rounded-lg py-4 px-4 shadow-md my-2 w-6/12 shadow-gray-200 h-[400px]">
+                <div class="flex flex-col gap-3 items-center justify-center w-full">
+                    <div class="chart-container mt-10">
+                    <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"></p-chart>
+                        </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </div> -->
+
+        <div class="flex flex-col w-full h-full  gap-3">
+            <div class="bg-white px-4 py-2 shadow-md w-max rounded-xl flex flex-row items-center justify-center hover:scale-105 transition-all duration-100">
+                <img src="../../../../assets/bohlamp.png" width="25" alt="">
+                <p class="text-gray-700 italic"> *) Klik kanan pada data tabel untuk action claim dan detail</p>
+            </div>
+           
+            <app-mol-table #GridTable [tableProps]="tableProps" [rowClass]="getRowClass" (rightClick)="selectedDataRightClick($event)" [contextMenu]="contextItem">
+                </app-mol-table>
+
+            <div class="grid grid-cols-3 gap-3 w-full">
+                <div class="box1 border-r-4 border-sky-300 bg-white rounded-lg py-6 px-4 w-full h-full cursor-pointer shadow-md shadow-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-400">
+                    <p class="text-lg font-semibold italic text-gray-500">TOTAL NILAI CLAIM</p>
+                    <p class="text-2xl text-sky-700">Rp. {{state_total_nilai_claim |number}}</p>
+                </div>
+                 <div class="box2 border-r-4 border-sky-300 bg-white rounded-lg py-6 px-4 w-full h-full cursor-pointer shadow-md shadow-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-400">
+                    <p class="text-lg font-semibold italic text-gray-500">TOTAL NILAI BILLING</p>
+                    <p class="text-2xl text-sky-700">Rp. {{state_total_nilai_billing |number}}</p>
+                </div>
+                <div class="box3 border-r-4 border-sky-300 bg-white rounded-lg py-6 px-4 w-full h-full cursor-pointer shadow-md shadow-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-400">
+                    <p class="text-lg font-semibold italic text-gray-500">Presentase</p>
+                    <p class="text-2xl text-sky-700">{{state_total_presentase |number}}%</p>
+                    
+                </div>
+
+            </div>
+                
+        </div>
+
+        <app-mol-dialog #claimDialog [DialogAttributes]="DialogAttributes" >
+            <form [formGroup]="Form" *ngIf="formState == 'detail'" class="grid grid-cols-2 gap-4 p-6 bg-white rounded-lg shadow">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. Pendaftaran</label>
+                    <input pInputText type="text" formControlName="no_pendaftaran" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">NIK</label>
+                    <input pInputText type="text" formControlName="nik" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. RM</label>
+                    <input pInputText type="text" formControlName="no_rm" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Pasien</label>
+                    <input pInputText type="text" formControlName="nama_pasien" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. SEP</label>
+                    <input pInputText type="text" formControlName="no_sep" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. Kartu</label>
+                    <input pInputText type="text" formControlName="no_kartu" class="w-full" />
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nilai Klaim</label>
+                    <input pInputText type="number"  (input)="formatCurrency($event)" [value]="formattedValue" formControlName="nilai_klaim" class="w-full"/>
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nilai Billing</label>
+                    <input pInputText type="number"  (input)="formatCurrency($event)" formControlName="nilai_billing" class="w-full"/>
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Selisih Persen</label>
+                    <input pInputText type="number"  (input)="formatCurrency($event)" formControlName="selisih_persen" class="w-full"/>
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Hari</label>
+                    <input pInputText type="number"  (input)="formatCurrency($event)" formControlName="jumlah_hari" class="w-full"/>
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk</label>
+                     <p-calendar formControlName="tanggal_masuk" styleClass="w-full" [showIcon]="true" class="w-full"  dateFormat="yy-mm-dd"/>
+                  </div>
+                
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Keluar</label>
+                    <p-calendar formControlName="tanggl_keluar" styleClass="w-full" [showIcon]="true" class="w-full" dateFormat="yy-mm-dd" />
+                  </div>
+                
+                  <!-- <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Diagnosa Simgos</label>
+                   <textarea formControlName=""></textarea>
+                  </div> -->
+              
+              </form>
+
+              <form [formGroup]="formClaim" *ngIf="formState == 'claim'"  class="grid grid-cols-2 gap-4 p-6 bg-white rounded shadow">
+
+                <!-- Text Fields -->
+                <div>
+                  <label class="block text-sm font-medium mb-1">No. Pendaftaran</label>
+                  <input pInputText formControlName="no_pendaftaran" class="w-full" />
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">NIK</label>
+                  <input pInputText formControlName="nik" class="w-full" />
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">No. RM</label>
+                  <input pInputText formControlName="no_rm" class="w-full" />
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">Nama Pasien</label>
+                  <input pInputText formControlName="nama_pasien" class="w-full" />
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">No. SEP</label>
+                  <input pInputText formControlName="no_sep" class="w-full" />
+                </div>
+              
+                <!-- Datepickers -->
+                <div>
+                  <label class="block text-sm font-medium mb-1">Tanggal Masuk</label>
+                  <p-calendar formControlName="tanggal_masuk" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">Tanggal Keluar</label>
+                  <p-calendar formControlName="tanggal_keluar" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
+                </div>
+              
+                <!-- Dropdowns -->
+                <div>
+                  <label class="block text-sm font-medium mb-1">Cara Masuk</label>
+                  <p-dropdown 
+                    [options]="caraMasukOptions" 
+                    formControlName="cara_masuk" 
+                    optionLabel="nama_cara_masuk"
+                    placeholder="Pilih Cara Masuk" 
+                    class="w-full" 
+                    styleClass="w-full">
+                  </p-dropdown>
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">Jenis Rawat</label>
+                  <p-dropdown 
+                  styleClass="w-full"
+                    [options]="jenisRawatOptions" 
+                    formControlName="jenis_rawat" 
+                    optionLabel="nama_jenis_rawat"
+                    placeholder="Pilih Jenis Rawat" 
+                    class="w-full">
+                  </p-dropdown>
+                </div>
+              
+                <div>
+                  <label class="block text-sm font-medium mb-1">Cara Pulang</label>
+                  <p-dropdown 
+                    styleClass="w-full"
+                    [options]="caraPulangOptions" 
+                    optionLabel="cara_pulang"
+                    formControlName="cara_pulang" 
+                    placeholder="Pilih Cara Pulang" 
+                    class="w-full">
+                  </p-dropdown>
+                </div>
+              
+                <!-- MultiSelects -->
+                <div class="col-span-2">
+                  <label class="block text-sm font-medium mb-1">Diagnosa</label>
+                  <p-multiSelect 
+                    styleClass="w-full"
+                    [options]="diagnosaOptions" 
+                    optionLabel="nama_icd_10"
+                    display="chip"
+                    formControlName="diagnosa"
+                    class="w-full"
+                    placeholder="Pilih Diagnosa">
+                    <ng-template let-icd10 #item>
+                        <div class="flex items-center gap-2">
+                           <p>{{icd10.kode_icd_10}} -</p>
+                            <div>{{ icd10.nama_icd_10 }}</div>
+                        </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </div>
+              
+                <div class="col-span-2">
+                  <label class="block text-sm font-medium mb-1">Procedure</label>
+                  <p-multiSelect 
+                  styleClass="w-full"
+                    [options]="procedureOptions" 
+                    optionLabel="nama_icd_9"
+                    display="chip"
+                    formControlName="procedure"
+                    class="w-full"
+                    placeholder="Pilih Procedure">
+                  </p-multiSelect>
+                </div>
+              
+                <!-- Submit -->
+               
+              
+              </form>
+              
+              
+              <div class="col-span-2 flex justify-end pt-4 gap-3">
+                <button pButton type="button" icon="pi pi-save" label="Submit" class="p-button-primary p-button-sm"></button>
+                <button pButton type="button" label="Close" icon="pi pi-times" class="p-button-danger p-button-sm" (click)="closeModalClaim()"></button>
+              </div>
+        </app-mol-dialog>
+
+
+</app-layout>
+

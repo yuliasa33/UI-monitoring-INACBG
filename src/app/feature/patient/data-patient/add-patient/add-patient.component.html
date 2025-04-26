@@ -1,0 +1,107 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div 
+    class="bg-white border-t-4 border-t-blue-400 h-max rounded-xl shadow-lg w-auto box my-2 px-6 py-4" >
+    <form [formGroup]="FormInputPasien" class="p-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="flex gap-2 items-center">
+                <label for="nik" class="w-36 font-semibold">No.KK</label>
+                <input 
+                    pInputText 
+                    type="text" 
+                    id="no_kk" 
+                    formControlName="no_kartu_keluarga" 
+                    class="flex-1" 
+                    autocomplete="off"
+                    placeholder="No. Kartu Keluarga"
+                />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="no_identitas" class="w-36 font-semibold">No Identitas</label>
+                <input pInputText id="no_identitas" formControlName="no_identitas" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="nama_lengkap" class="w-36 font-semibold">Nama</label>
+                <input pInputText id="nama_lengkap" formControlName="nama_lengkap" class="flex-1" autocomplete="off" placeholder="Nama Lengkap" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="phone" class="w-36 font-semibold">No HP</label>
+                <input pInputText id="phone" formControlName="phone" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="gender" class="w-36 font-semibold">Gender</label>
+                <p-dropdown [options]="Gender" styleClass="w-full" optionLabel="text" formControlName="gender" placeholder="Pilih Gender" class="flex-1 w-full" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="alamat" class="w-36 font-semibold">Alamat</label>
+                <input pInputText id="alamat" formControlName="alamat" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="kota" class="w-36 font-semibold">Kota</label>
+                <input pInputText id="kota" formControlName="kota" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="email" class="w-36 font-semibold">Email</label>
+                <input pInputText id="email" formControlName="email" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="panggilan" class="w-36 font-semibold">Panggilan</label>
+                <input pInputText id="panggilan" formControlName="panggilan" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="tgl_lahir" class="w-36 font-semibold">Tanggal Lahir</label>
+                <p-calendar formControlName="tanggal_lahir" [dateFormat]="'yy-mm-dd'" styleClass="w-full" class="flex-1 w-full" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="tempat_lahir" class="w-36 font-semibold">Tempat Lahir</label>
+                <input pInputText id="tempat_lahir" formControlName="tempat_lahir" class="flex-1" autocomplete="off" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="kebangsaan" class="w-36 font-semibold">Kebangsaan</label>
+                <p-dropdown [options]="Nationality" [filter]="true" optionLabel="label" formControlName="kebangsaan"  styleClass="w-full" class="flex-1 w-full" placeholder="Pilih Kebangsaan" />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="kebangsaan" class="w-36 font-semibold">Agama</label>
+                <p-dropdown 
+                    [options]="Agama" 
+                    [filter]="true" 
+                    optionLabel="label" 
+                    formControlName="agama"  
+                    styleClass="w-full" 
+                    class="flex-1 w-full"
+                    placeholder="Pilih Agama" 
+                />
+            </div>
+            <div class="flex gap-2 items-center">
+                <label for="kebangsaan" class="w-36 font-semibold">Jenis Pekerjaan</label>
+                <p-dropdown 
+                    [options]="JobType" 
+                    [filter]="true" 
+                    optionLabel="label" 
+                    formControlName="job_type"  
+                    styleClass="w-full" 
+                    class="flex-1 w-full"
+                    placeholder="Pilih Jenis Pekerjaan" 
+                />
+            </div>
+            <!-- <div class="flex flex-col gap-y-2">
+                <div class="flex gap-2 items-center">
+                    <p-checkbox formControlName="is_member" value="" inputId="ny" />
+                    <label for="ny" class="ml-2">Member</label>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <label for="kebangsaan" class="w-36 font-semibold">Pilih Member</label>
+                    <p-dropdown 
+                        [options]="JobType" 
+                        [filter]="true" 
+                        optionLabel="label" 
+                        formControlName="job_type"  
+                        styleClass="w-full" 
+                        class="flex-1 w-full"
+                        placeholder="Pilih Jenis Pekerjaan" 
+                    />
+                </div>
+            </div> -->
+        </div>
+    </form>
+    </div>
+    </app-layout>

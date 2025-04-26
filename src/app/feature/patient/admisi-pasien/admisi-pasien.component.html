@@ -1,0 +1,77 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)" [withBox]="true">
+    <form [formGroup]="FormAdmisiPasien" class="">
+        <div class="flex flex-row w-full">
+            <div class="w-6/12">
+                <div class="flex flex-col w-full gap-4 py-3 px-2">
+                    <app-mol-input-fields 
+                        [labelValue]="'No Antrian'" 
+                        [inputType]="'text'"
+                        formControlName="no_antrian"
+                    />
+                    <div class="flex flex-row w-full">
+                        <div class="w-full">
+                            <org-input-lookup 
+                                #LookupPasien 
+                                [labelLookup]="'Pasien'" 
+                                [LookupHeaders]="'Data Pasien'"
+                                [Value]="" [LookupTable]="tableLookupProps"
+                                (doubleClickRow)="handleDoubleClickSelect($event)"
+                                (seletedRow)="handleSelectedRow($event)"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full">
+                        <div class="w-full">
+                            <org-input-lookup 
+                                #LookupDebitur
+                                [labelLookup]="'Debitur'" 
+                                [LookupHeaders]="'Data Debitur'"
+                                [Value]="" 
+                                [LookupTable]="tableLookupPropsDebitur"
+                                (doubleClickRow)="handleDoubleClickSelect($event)"
+                                (seletedRow)="handleSelectedRow($event)"
+                            />
+                        </div>
+                    </div>
+                    <div class="w-full">
+                        <div class="w-full">
+                            <org-input-lookup 
+                                #LookupPoli 
+                                [labelLookup]="'Poli'" 
+                                [LookupHeaders]="'Data Poli'"
+                                [Value]="" 
+                                [LookupTable]="tableLookupPropsPoli"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" w-6/12">
+                <div class="flex flex-col w-full gap-4 py-3 px-2">
+                    <div class="w-full">
+                        <div class="w-full">
+                            <org-input-lookup 
+                                #LookupDokter 
+                                [labelLookup]="'Dokter'" 
+                                [LookupHeaders]="'Data Dokter'"
+                                [Value]="" 
+                                [LookupTable]="tableLookupPropsDokter"
+                            />
+                        </div>
+                    </div>
+
+                    <app-mol-input-fields 
+                        [labelValue]="'Keluhan'" 
+                        [inputType]="'text'"
+                        formControlName="keluhan" 
+                    />
+                    <app-mol-input-fields 
+                        [labelValue]="'Tanggal Admisi'" 
+                        [inputType]="'date'"
+                        formControlName="tgl_admisi"
+                    />
+                </div>
+            </div>
+        </div>
+    </form>
+</app-layout>

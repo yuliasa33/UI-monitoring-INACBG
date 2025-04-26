@@ -1,0 +1,31 @@
+<div class="card flex justify-content-center">
+    <!-- <input *ngIf="inputType != 'date'" [type]="inputType" class="w-full" [disabled]="Disabled" styleClass="w-full" pInputText   />
+    <p-calendar *ngIf="inputType == 'date'" class="w-full" styleClass="w-full" [disabled]="Disabled"></p-calendar> -->
+        <!-- Regular input for non-date types -->
+        <input
+          *ngIf="inputType != 'date'"
+          [type]="inputType"
+          class="w-full"
+          [disabled]="Disabled"
+          [value]="value || ''"
+          (input)="onInput($event)"
+          (blur)="onBlur()"
+          styleClass="w-full"
+          [min]="min"
+          [max]="max"
+          pInputText
+        />
+      
+        <!-- PrimeNG calendar for date type -->
+        <p-calendar
+          *ngIf="inputType == 'date'"
+          class="w-full"
+          styleClass="w-full"
+          [disabled]="Disabled"
+          [ngModel]="value"
+          dateFormat="dd-mm-yy"
+          (ngModelChange)="onInput($event)"
+          (onBlur)="onBlur()"
+        ></p-calendar>
+      
+</div>

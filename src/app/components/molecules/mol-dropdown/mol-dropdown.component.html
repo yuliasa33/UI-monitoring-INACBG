@@ -1,0 +1,21 @@
+<div class="flex flex-row w-full items-center justify-center">
+  <div class="w-6/12 font-semibold"> 
+    <atom-label [labelValue]="Labels"></atom-label>
+    </div>
+    <div class="w-full">
+    <p-dropdown
+      [options]="DropdownAttribute.datasource"
+      [(ngModel)]="DropdownAttribute.selectedValue"
+      [optionLabel]="DropdownAttribute.Optionlabel"
+      [filter]="DropdownAttribute.filter"
+      [filterBy]="DropdownAttribute.filterBy"
+      [optionValue]="DropdownAttribute.OptionValue"
+      [showClear]="true"
+      [placeholder]="DropdownAttribute.placeholder"
+      class="w-full"
+      styleClass="w-full"
+      [disabled]="Disabled"
+      (onChange)="onValueChange($event.value)">
+    </p-dropdown>
+    </div>
+  </div>

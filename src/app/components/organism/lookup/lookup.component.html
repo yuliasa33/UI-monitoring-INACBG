@@ -1,0 +1,11 @@
+<!-- <p-button (click)="showDialog()" label="Show" /> -->
+    <p-dialog
+        [header]="LookupAttribute.HeaderText"
+        [(visible)]="visible"
+        [modal]="true"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [style]="{ width: '80rem' }"
+        [draggable]="false"
+        [resizable]="false">
+            <app-mol-table [tableProps]="LookupAttribute.tableDataAttr" ></app-mol-table>
+    </p-dialog>

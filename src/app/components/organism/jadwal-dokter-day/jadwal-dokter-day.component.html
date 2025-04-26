@@ -1,0 +1,54 @@
+<p-accordion>
+  <p-accordionTab *ngFor="let day of jadwalDokterDay" (selectedChange)="addJadwal.set(undefined)">
+    <ng-template pTemplate="header">
+      <div class="flex items-center justify-between w-full">
+        <span class="vertical-align-middle capitalize">{{ day.nama_hari }}</span>
+        <div class="flex gap-x-4 items-center">
+          <p class="font-semibold text-gray-500">Terdapat {{ day.waktu.length }} Jadwal</p>
+          <i class="pi pi-calendar mr-2"></i>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content" >
+      <div *ngIf="addJadwal() === undefined">
+        <div *ngFor="let time of day.waktu" class="mb-2 flex flex-col gap-y-2">
+          <div class="border border-[#ced4da] rounded-lg flex justify-between p-4">
+            <p class="font-bold">{{ time.jam_mulai }} - {{ time.jam_selesai }}</p>
+            <button title="delete" (click)="handleDelete(time.id_jadwal_dokter)">
+              <span class="pi pi-trash text-red-500"></span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <button (click)="addJadwal.set(day.id_hari)" class="w-full py-2 bg-blue-500 rounded font-semibold text-white">Tambah Jadwal</button>
+        </div>
+      </div>
+      <form *ngIf="addJadwal() == day.id_hari" [formGroup]="FormAddJadwalDokter" class="flex flex-col gap-y-2">
+        <div class="flex gap-x-2">
+          <div class="flex flex-col gap-y-2 flex-1">
+            <p>Jam Mulai</p>
+            <p-calendar styleClass="w-full" [timeOnly]="true" formControlName="jam_mulai" />
+          </div>
+          <div class="flex flex-col gap-y-2 flex-1">
+            <p>Jam Selesai</p>
+            <p-calendar styleClass="w-full" [timeOnly]="true" formControlName="jam_selesai" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-y-2 w-full">
+          <p>Kuota</p>
+          <input type="number" pInputText placeholder="0" formControlName="kuota" />
+        </div>
+        <div class="flex flex-col gap-y-2 w-full">
+          <p>Keterangan</p>
+          <input type="text" pInputText placeholder="Masukan Keterangan" formControlName="keterangan" />
+        </div>
+        <button (click)="handleSubmit()" title="Tambah Jadwal" type="button" class="p-3 rounded bg-blue-500 text-white font-semibold">
+          Simpan Jadwal
+        </button>
+        <button (click)="cancelAddJadwal()" title="Cancel" type="submit" class="p-3 rounded bg-gray-200 text-gray-700 font-semibold">
+          Batal
+        </button>
+      </form>
+    </ng-template>
+  </p-accordionTab>
+</p-accordion>

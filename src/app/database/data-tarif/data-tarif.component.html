@@ -1,0 +1,34 @@
+<app-layout>
+    <app-mol-table [tableProps]="TableProps" (toolbarClick)="handleToolbarClicK($event)" (onSelectedRow)="handleSelectedRow($event)"></app-mol-table>
+
+    
+    <!--Modal Data-->
+    <div class="card flex justify-center">
+        <p-dialog [header]="inputState == 'input'? 'Tambah Tarif' : 'Edit Tarif'"   [modal]="true" [(visible)]="visible"
+            [style]="{ width: 'max-content',height:'auto' }">
+                <form [formGroup]="FormTarif">
+                    <div class="grid grid-cols-2 w-full gap-3 p-6">
+                        <!-- <span class="p-text-secondary block mb-8">Update your information.</span> -->
+                       <div class="flex items-center gap-4 mb-4">
+                            <label for="username" class="font-semibold w-32">KODE TARIF</label>
+                            <input pInputText id="username" formControlName="kode_tarif" class="flex-auto" autocomplete="off" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="username" class="font-semibold w-32">NAMA TARIF</label>
+                            <input pInputText id="username" formControlName="nama_tarif" class="flex-auto" autocomplete="off" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="username" class="font-semibold w-32">HARGA</label>
+                            <input pInputText id="username" formControlName="harga" class="flex-auto" autocomplete="off" />
+                        </div>
+                         
+                    </div>
+                </form>
+            <div class="flex justify-end gap-2">
+                <p-button label="Cancel" styleClass="p-button-sm p-button-danger" icon="pi pi-times"  (onClick)="handleClickCancelInput()" />
+                <p-button label="Save" styleClass="p-button-sm p-button-success" severity="primary" icon="pi pi-save" (click)="handleClickSubmit(FormTarif.value)" />
+            </div>
+        </p-dialog>
+    </div>
+
+    </app-layout>

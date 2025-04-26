@@ -1,0 +1,12 @@
+{
+    "columns": [
+        {
+            "field": "full_name",
+            "header": "Nama Pasien"
+        },
+        {
+            "field": "kode_dokter",
+            "header": "KODE DOKTER"
+        }
+    ]
+}

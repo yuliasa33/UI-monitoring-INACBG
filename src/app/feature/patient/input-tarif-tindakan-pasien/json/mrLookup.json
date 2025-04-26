@@ -1,0 +1,17 @@
+{
+    "columns":[
+        {
+          "field": "nama_pasien",
+          "header": "Nama Pasien"
+        },
+        {
+          "field": "no_register",
+          "header": "No REGISTER"
+        },
+        {
+          "field": "tgl_admisi",
+          "header": "Tgl Admisi",
+          "type": "date"
+        }
+      ]
+}

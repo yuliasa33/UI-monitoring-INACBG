@@ -1,0 +1,12 @@
+{
+  "columns": [
+    {
+      "field": "kode_satuan",
+      "header": "Kode"
+    },
+    {
+      "field": "nama_satuan",
+      "header": "Nama"
+    }
+  ]
+}

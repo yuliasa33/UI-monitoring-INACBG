@@ -1,0 +1,140 @@
+<div class="layout-wrapper">
+  <!-- Header -->
+  <!-- <p-menubar styleClass="h-[70px] shadow-sm mb-2 layout-header" class="layout-header">
+    <ng-template pTemplate="start" class="flex flex-row justify-center w-full items-center">
+      <p class="p-4 text-xl font-extrabold">
+        <span class="text-yellow-400">GRA</span>
+        <span class="text-sky-600">HCIS </span>
+        <span class="text-indigo-500"> PET's</span>
+      </p>
+
+    </ng-template>
+    <ng-template pTemplate="end">
+      <i class="font-bold pi pi-bars"></i>
+    </ng-template>
+
+   
+    <ng-template pTemplate="end">
+      <div class="flex gap-4 items-center">
+      </div>
+    </ng-template>
+  </p-menubar> -->
+<!--bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500-->
+  <p-menubar
+    styleClass="h-[70px] shadow-sm layout-header  text-white"
+    class="layout-header">
+    <!-- Left Section -->
+    <ng-template pTemplate="start" class="flex flex-row justify-between w-full items-center">
+      <div class="flex flex-row w-full justify-center items-center">
+        <p class="p-4 text-xl font-extrabold">
+          <span class="text-amber-300 text-3xl"> MONITORING</span>
+          <span class="text-sky-700  text-3xl"> INA-CBG</span>
+        </p>
+        <img src="../../../assets/kemenkes.png" width="130" height="5" alt="">
+      </div>
+      
+
+      
+    </ng-template>
+
+    <!-- Center Section -->
+    <!-- <ng-template pTemplate="start">
+      <div class="flex gap-4">
+        <button pButton label="Home" class="p-button-text text-gray-600"></button>
+        <button pButton label="About" class="p-button-text text-gray-600"></button>
+        <button pButton label="Services" class="p-button-text text-gray-600"></button>
+        <button pButton label="Contact" class="p-button-text text-gray-600"></button>
+      </div>
+    </ng-template> -->
+
+    <!-- Right Section -->
+    <ng-template pTemplate="end">
+      
+      <div class="flex gap-4 items-center">
+
+        <p class="text-xl font-semibold">Selamat Pagi ! , <span class="text-blue-500">{{userData?.full_name}}</span></p>
+        <!-- Notification Icon -->
+        <button pButton class="p-button-plain p-button-rounded p-button-text" icon="pi pi-bell"
+          aria-label="Notifications" tooltip="Notifications" tooltipPosition="bottom"></button>
+
+        <!-- Profile Dropdown -->
+        <p-menubar [model]="userMenu" class="w-10">
+          <ng-template pTemplate="start">
+            <img src="https://via.placeholder.com/30" alt="User Avatar" class="h-8 rounded-full w-8" />
+          </ng-template>
+        </p-menubar>
+
+        <!-- Mobile Menu Icon -->
+        <i class="text-gray-600 font-bold lg:hidden pi pi-bars"></i>
+      </div>
+    </ng-template>
+  </p-menubar>
+
+
+
+
+  <div class="layout-content">
+    <!-- Sidebar -->
+    <div
+      [@sidebarState]="sidebarState ? 'maximize' : 'minimize'"
+      class="h-full shadow border-r border-[#dee2e6] z-[100] duration-300 ease-in-out layout-sidebar py-6 transition-transform"
+    >
+      <div class="flex mb-3 gap-x-2">
+        <div [class]="searchClass">
+          <input 
+            type="text" 
+            placeholder="Search menu..." 
+            class="flex-1 outline-none text-gray-500"
+            (input)="handleSearchMenu($event)"
+          >
+          <span class="pi pi-search text-[#354052]"></span>
+        </div>
+        <button title="menu" type="button" class="w-[30px] h-[30px] bg-[#F2F4F7] rounded-md" (click)="handleToggleSidebar()">
+          <span [class]="menuIconButtonClass"></span>
+        </button>
+      </div>
+      <p-panelMenu 
+        [model]="menuItems.length > 0 ? menuItems : sidebarItems" 
+        [styleClass]="sidebarClass"
+      />        
+    </div>
+
+    <!-- Main Content -->
+    <div class="layout-main" [@contentState]="isShow ? 'extended' : 'collapsed'">
+      <!-- <p-sidebar
+          [fullScreen]="true"
+          [visible]="true" 
+          position="bottom"
+          [modal]="false"
+          styleClass="custom-sidebar absolute"
+      >
+          content
+      </p-sidebar> -->
+      <div class="flex flex-row w-full gap-3 items-center pt-3 px-4">
+        <!-- <div class="bg-white rounded-md shadow-md box cursor-pointer px-4 py-4" (click)="toggleSidebar()">
+          <i class="pi pi-bars"></i>
+        </div> -->
+        <p-breadcrumb [model]="breadcrumbItems" styleClass="font-bold" class="w-full font-bold"></p-breadcrumb>
+      </div>
+
+      <div [@contentAnimation] class="p-3">
+        <div class="flex flex-row h-auto justify-end w-full gap-3 mb-2">
+          <div *ngFor="let buttonAttr of ButtonNav">
+            <p-button 
+              [label]="buttonAttr.text" 
+              [id]="buttonAttr.id" 
+              [icon]="buttonAttr.icons"
+              (onClick)="handleClickNavbar(buttonAttr.id)" 
+              [styleClass]="buttonAttr.styleClass"
+            />
+          </div>
+        </div>
+        <div [class]="withBox ? 'relative w-auto h-max my-2 rounded-[10px] bg-white shadow-md p-5 border border-[#E4E7EC]':''">
+          <ng-content></ng-content>
+        </div>
+       
+      </div>
+    
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<app-layout>
+  <div class="mb-2">
+    <p class="text-lg font-semibold text-gray-700">Debitur</p>
+  </div>
+  <app-mol-table
+    [tableProps]="TableProps"
+    (toolbarClick)="handleToolbarClick($event)"
+    (onSelectedRow)="handleSelectedRow($event)"
+  />
+  <p-dialog
+    [(visible)]="visible"
+    [header]="inputState === 'Add' ? 'Tambah Debitur' : 'Edit Debitur'"
+    [modal]="true"
+    [closable]="true"
+    styleClass="w-full md:w-2/3 lg:w-1/2 h-full"
+  >
+  <div class="h-full flex flex-col justify-between">
+    <form [formGroup]="FormItem" class="flex gap-4 py-4 my-4 border-t border-gray-200 w-full">
+      <div class="flex flex-col gap-2 flex-1">
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="kode_debitur" class="font-semibold">Kode Debitur</label>
+          <input
+            id="kode_debitur"
+            formControlName="kode_debitur"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="nama_debitur" class="font-semibold">Nama Debitur</label>
+          <input
+            id="nama_debitur"
+            formControlName="nama_debitur"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="alamat_debitur" class="font-semibold">Alamat Debitur</label>
+          <textarea
+            id="alamat_debitur"
+            formControlName="alamat_debitur"
+            type="text"
+            pInputTextarea
+            rows="3"
+            class="flex-1 w-full"
+          ></textarea>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2 flex-1 h-min">
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="telepon" class="font-semibold">No. Telepon</label>
+          <input
+            id="telepon"
+            formControlName="telepon"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="email" class="font-semibold">Email</label>
+          <input
+            id="email"
+            formControlName="email"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="tgl_expired" class="font-semibold">Tanggal Expired</label>
+          <p-calendar
+            id="tgl_expired"
+            formControlName="tgl_expired"
+            styleClass="w-full" 
+            class="w-full"
+          /> 
+        </div>
+      </div>
+    </form>
+    <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+      <p-button
+        label="Cancel"
+        styleClass="p-button-sm p-button-danger"
+        icon="pi pi-times"
+        (onClick)="handleCancel()"
+      ></p-button>
+      <p-button
+        *ngIf="inputState === 'Edit'"
+        label="Edit"
+        styleClass="p-button-sm p-button-warning"
+        icon="pi pi-pencil"
+        (onClick)="handleSubmit()"
+      ></p-button>
+      <p-button
+        *ngIf="inputState === 'Add'"
+        label="Save"
+        styleClass="p-button-sm p-button-success"
+        icon="pi pi-save"
+        (onClick)="handleSubmit()"
+      ></p-button>
+    </div>
+  </div> 
+  </p-dialog>
+</app-layout>

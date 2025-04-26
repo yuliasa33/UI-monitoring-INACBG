@@ -1,0 +1,49 @@
+<app-layout>
+  <app-mol-table
+    [tableProps]="TableProps"
+    (onSelectedRow)="handelSelectedRow($event)"
+    (toolbarClick)="handleToolbarClick($event)"
+  />
+
+  <div class="card flex justify-center">
+    <p-dialog 
+      [header]="inputState == 'normal'? 'Tambah Pasien' : 'Edit Pasien'" 
+      [modal]="true"
+      [(visible)]="showModal" 
+      [style]="{ width: '50%'}" 
+      (onHide)="resetForm()"
+    >
+      <form [formGroup]="FormItem">
+        <div class="grid w-full gap-3 mb-4">
+          <app-mol-input-fields
+            [Disabled]="inputState == 'edit'" 
+            [inputType]="'text'" 
+            labelValue="KODE SATUAN"
+            formControlName="kode_satuan" 
+          />
+          <app-mol-input-fields
+            [inputType]="'text'"
+            labelValue="NAMA SATUAN"
+            formControlName="nama_satuan"
+          />
+        </div>
+      </form>
+        <div class="flex justify-end gap-2">
+          <p-button 
+            label="Cancel" 
+            styleClass="p-button-sm p-button-danger" 
+            icon="pi pi-times"
+            (onClick)="handleClose()"
+          />
+          <p-button 
+            label="Save" 
+            styleClass="p-button-sm p-button-success" 
+            severity="primary" 
+            icon="pi pi-save"
+            (click)="handleClickSubmit()" 
+          />
+        </div>
+    </p-dialog>
+  </div>
+  
+</app-layout>

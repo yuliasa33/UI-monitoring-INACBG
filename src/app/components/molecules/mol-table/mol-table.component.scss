@@ -1,0 +1,33 @@
+::ng-deep .p-datatable {
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #e0e0e0 !important;
+}
+
+::ng-deep .p-datatable .p-datatable-header {
+    background-color: transparent !important;
+    border-top: none !important;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr{
+  background: #ffffff;
+  color: #080809;
+  transition: box-shadow 0.2s;
+}
+
+::ng-deep .p-contextmenu {
+  z-index: 1000;
+}
+
+// .redBkg {
+//     background-color: red !important;
+//   }
+  
+//   .greenBkg {
+//     background-color: green !important;
+//   }
+  
+//   .yellowBkg {
+//     background-color: yellow !important;
+//   }

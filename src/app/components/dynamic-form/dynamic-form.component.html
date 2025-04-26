@@ -1,0 +1,59 @@
+<section>
+    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div *ngFor="let field of formConfig" class="space-y-2">
+          <label [for]="field.name" class="block font-medium text-gray-700">
+            {{ field.label }}
+          </label>
+      
+          <!-- Input Fields -->
+          <input
+            *ngIf="field.type === 'text' || field.type === 'email'"
+            pInputText
+            [type]="field.type"
+            [formControlName]="field.name"
+            [id]="field.name"
+            [placeholder]="field.placeholder"
+            class="w-full p-2 border rounded-md shadow-sm"
+          />
+      
+          <!-- Textarea -->
+          <textarea
+            *ngIf="field.type === 'textarea'"
+            pInputTextarea
+            [formControlName]="field.name"
+            [id]="field.name"
+            [placeholder]="field.placeholder"
+            class="w-full p-2 border rounded-md shadow-sm"
+          ></textarea>
+      
+          <!-- Dropdown -->
+          <p-dropdown
+            *ngIf="field.type === 'dropdown'"
+            [options]="field.options"
+            [formControlName]="field.name"
+            [id]="field.name"
+            optionLabel="label"
+            optionValue="value"
+            class="w-full"
+          ></p-dropdown>
+      
+          <!-- Error Messages -->
+          <p
+            *ngIf="dynamicForm.get(field.name)?.invalid && dynamicForm.get(field.name)?.touched"
+            class="text-red-500 text-sm"
+          >
+            {{ field.errorMessage }}
+          </p>
+        </div>
+      
+        <button
+          type="submit"
+          pButton
+          label="Submit"
+          class="p-button-success w-full"
+          [disabled]="dynamicForm.invalid"
+        ></button>
+      </form>
+      
+      
+</section>

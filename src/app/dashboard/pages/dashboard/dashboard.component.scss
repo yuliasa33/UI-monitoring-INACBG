@@ -1,0 +1,19 @@
+// .chart-container {
+//     width: 100%; /* Make the container take the full width */
+//     height: 400px; /* Set a fixed height for the chart */
+//   }
+  
+//   .chart-container canvas {
+//     display: block;
+//     width: 100% !important; /* Ensure the chart spans the container */
+//     height: auto !important; /* Maintain aspect ratio */
+//   }
+
+  .chart-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .rowBgOrange{
+    background-color: orange;
+  }

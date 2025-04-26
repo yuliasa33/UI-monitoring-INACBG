@@ -1,0 +1,150 @@
+<div class="card">
+
+  <!-- <div class="w-full bg-teal-400 h-16 items-center flex flex-row text-white  rounded-tr-lg rounded-tl-lg p-3"> -->
+  <!-- Left Section -->
+  <!-- <div class="flex flex-row justify-start items-center w-8/12 p-3"> -->
+  <!-- Add any content here -->
+  <!-- <div *ngIf="tableProps?.toolbars?.length != 0" class="flex flex-row">
+        <div *ngFor="let toolbarButton of tableProps.toolbars" class="flex flex-row justify-start">
+          <div *ngIf="toolbarButton == 'Add'" (click)="onClickToolbar(toolbarButton)"
+            class="cursor-pointer hover:border-white hover:border hover:shadow-md transition-all duration-100  px-2 mx-2 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-plus'"></i> Add</div>
+            <div  *ngIf="toolbarButton == 'Edit'" (click)="onClickToolbar(toolbarButton)"
+            class="cursor-pointer hover:border-white hover:border hover:shadow-md transition-all duration-100  px-2 mx-2 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-pencil'"></i> Edit</div>
+            <div  *ngIf="toolbarButton == 'Delete'" (click)="onClickToolbar(toolbarButton)"
+            class="cursor-pointer hover:border-white hover:border hover:shadow-md transition-all duration-100  px-2 mx-2 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-trash'"></i> Delete</div>
+            <div  *ngIf="toolbarButton == 'Print'" (click)="onClickToolbar(toolbarButton)"
+            class="cursor-pointer hover:border-white hover:border hover:shadow-md transition-all duration-100  px-2 mx-2 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-print'"></i> Print</div>
+        </div>
+      </div> -->
+  <!-- </div> -->
+
+  <!-- Right Section -->
+  <div class="flex flex-row w-4/12">
+    <!-- <input type="text" pInputText [(ngModel)]="searchText" (keydown.enter)="onSearchChange(searchText)"
+        placeholder="Search..." class="w-full h-10 p-2 border border-gray-300 rounded text-black" /> -->
+      </div>
+        
+<p-contextMenu #cm [model]="contextMenu"></p-contextMenu>
+
+<p-table #dt1 [value]="tableProps.datasource" [paginator]="true" [rows]="tableProps.pagination" (onContextMenuSelect)="onRightClick($event)"
+  [selectionMode]="'single'" [(selection)]="selectedRow" (onRowSelect)="handleSelectRow($event)"
+  (onRowUnselect)="handleUnselectRow($event)" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+  (onRowDblclick)="onRowDoubleClick($event)"  (onRowInit)="onRowInit($event)" [contextMenu]="cm" 
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 25, 50]"
+  [globalFilterFields]="tableProps.filteredBy" [resizableColumns]="true">
+  <ng-template pTemplate="caption" >
+    <div class="flex justify-between">
+      <div *ngIf="tableProps?.toolbars?.length != 0" class="flex flex-row gap-3">
+        <div *ngFor="let toolbarButton of tableProps.toolbars" class="flex flex-row justify-start">
+          <div (click)="onClickToolbar(toolbarButton)" [id]="toolbarButton!.id"
+            class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex hover:border px-3 py-1 hover:rounded-lg">
+            {{toolbarButton.label}} <i class="{{toolbarButton.icon}}"></i> 
+          </div>
+          <!-- <div *ngIf="toolbarButton == 'Add'" (click)="onClickToolbar(toolbarButton)"
+            class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex hover:border px-3 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-plus'"></i> Add
+          </div> -->
+          <!-- <div *ngIf="toolbarButton == 'Edit'" (click)="onClickToolbar(toolbarButton)"
+             class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex hover:border px-3 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-pencil'"></i> Edit
+          </div>
+          <div *ngIf="toolbarButton == 'Detail'" (click)="onClickToolbar(toolbarButton)"
+             class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex hover:border px-3 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-info-circle'"></i> Detail
+          </div>
+          <div *ngIf="toolbarButton == 'Delete'" (click)="onClickToolbar(toolbarButton)"
+             class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex hover:border px-3 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-trash'"></i> Delete
+          </div>
+          <div *ngIf="toolbarButton == 'Print'" (click)="onClickToolbar(toolbarButton)"
+             class="cursor-pointer hover:bg-slate-200 gap-3 items-center justify-center flex px-3 py-1 hover:rounded-lg">
+            <i [class]="'pi pi-print'"></i> Print
+          </div> -->
+        </div>
+      </div>
+      <div class="flex gap-x-2">
+        <!-- <button type="button" class="rounded-md border border-[#2B629E] text-[#2B629E] px-3 hover:outline hover:outline-[#2B629E]/20">
+          <i class="pi pi-print"></i>
+          <span class="ml-2">Print</span>
+        </button> -->
+        <div *ngIf="rightHeaderTemplate" class="flex gap-x-2">
+          <ng-container *ngTemplateOutlet="rightHeaderTemplate"></ng-container>
+        </div>
+        <div class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" #inpt (input)="dt1.filterGlobal(inpt.value,'contains')"
+            placeholder="Search keyword" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Table Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of tableProps.columns" [style]="col?.headerStyle">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  
+  <ng-template pTemplate="body"   let-rowData>
+  <!-- Table Body -->
+    <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData" [ngClass]="rowClass?.(rowData)">
+      <td *ngFor="let bod of tableProps.columns" class="font-semibold" [style]="bod?.style">
+        <!-- Check if column type is button -->
+        <ng-container class="flex flex-row w-full items-center justify-center gap-3 h-auto"
+          *ngIf="bod.type === 'button'; else contentTemplate">
+          <p-button *ngFor="let button of bod.button" class="mx-2" [label]="button.buttonLabel"
+            [icon]="button.buttonIcon" [styleClass]="button.buttonClass" (onClick)="button.onClick(rowData)">
+          </p-button>
+        </ng-container>
+        <ng-container class="flex flex-row items-center justify-center gap-3 h-auto"
+          *ngIf="bod.type === 'toggle'">
+          <atom-toggle
+            [checked]="rowData[bod.field]"
+            [label]="bod.toggleProps?.label"
+            (valueChange)="bod.toggleProps?.valueChange(rowData[bod.field], rowData)"
+          />
+        </ng-container>
+        <ng-template #contentTemplate>
+          <!-- Check if column type is date -->
+          <ng-container *ngIf="bod.type === 'date'; else currencyTemplate">
+            {{ rowData[bod.field] | date:'yyyy-MM-dd' }}
+          </ng-container>
+          <!-- Check if column type is currency -->
+          <ng-template #currencyTemplate>
+            <ng-container *ngIf="bod.type === 'currency'; else PercentageTemplate">
+              {{ rowData[bod.field] | currency:'Rp.':'symbol':'1.2-2' }}
+            </ng-container>
+          </ng-template>
+          <ng-template #PercentageTemplate>
+            <ng-container *ngIf="bod.type === 'percentage'; else textContent">
+              {{ rowData[bod.field]+'%' }}
+            </ng-container>
+          </ng-template>
+          <!-- Default content -->
+          <ng-template #textContent>
+            {{ bod.type !== "toggle" ? getNestedValue(rowData, bod.field) : "" }}
+          </ng-template>
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+
+
+  <!-- Paginator Left Template -->
+  <!-- <ng-template pTemplate="paginatorleft">
+    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+  </ng-template> -->
+
+  <!-- Paginator Right Template -->
+  <!-- <ng-template pTemplate="paginatorright">
+    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+  </ng-template> -->
+</p-table>
+</div>

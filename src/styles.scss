@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+
+html,
+body{
+    // font-family: "Poppins",serif !important;
+    font-family: "Roboto", sans-serif !important;
+    font-weight: 500 !important;
+    overflow: hidden;
+    background-color: rgb(220, 233, 236);
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+    //  background-image: url('./assets/12124.jpg');
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-size: cover;
+    backdrop-filter: blur(10%);
+    font-size: 12px;
+  
+
+  &.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  
+}
+
+::ng-deep .highlight-row {
+  background-color: #fff9db; /* Light yellow */
+}
+
+.rowBgGreen{
+  color: #000000;
+  background-color: rgb(212, 255, 212) !important;
+}
+
+.rowBgRed{
+  color: #000000;
+  background-color: rgb(250, 188, 188) !important;
+}
+
+.rowBgYellow{
+  color: #000000;
+  background-color: rgb(253, 251, 145) !important;
+}
+
+.rowBgOrange{
+  color: #000000;
+  background-color: rgb(255, 196, 119) !important;
+}

@@ -1,0 +1,86 @@
+<app-layout>
+  <div class="mb-2">
+    <p class="text-lg font-semibold text-gray-700">Cuti Dokter</p>
+  </div>
+  <app-mol-table 
+    [tableProps]="TableProps" 
+    (toolbarClick)="handleToolbarClick($event)"
+    (onSelectedRow)="handleSelectRow($event)"
+  />
+  <p-dialog
+    [header]="inputState == 'Add' ? 'Tambah Cuti Dokter' : 'Edit Cuti Dokter'"
+    [modal]="true"
+    [(visible)]="showModal"
+    [closable]="true"
+    styleClass="w-full md:w-2/3 lg:w-1/2 h-full"
+    (onHide)="handleCancel()"
+  >
+    <div class="h-full flex flex-col justify-between">
+      <form [formGroup]="FormItem" class="flex flex-col gap-4 py-4 my-4 border-t border-gray-200 w-full">
+        <org-input-lookup 
+          #LookupDokter 
+          [labelLookup]="'Dokter'"  
+          [LookupHeaders]="'Data Dokter'" 
+          [Value]="" 
+          [LookupTable]="tableLookupProps"
+          class="pb-4 border-b border-gray-200"
+        />
+        <div class="flex-1 w-full flex gap-x-4">
+          <div class="flex flex-col gap-2 items-start w-full flex-1">
+            <label for="tgl_mulai_cuti" class="font-semibold">Tanggal Mulai Cuti</label>
+            <p-calendar 
+                id="tgl_mulai_cuti" 
+                formControlName="tgl_mulai_cuti" 
+                class="flex-1 w-full" 
+                styleClass="w-full"
+            />
+          </div>
+          <div class="flex flex-col gap-2 items-start w-full flex-1">
+            <label for="tgl_selesai_cuti" class="font-semibold">Tanggal Selesai Cuti</label>
+            <p-calendar 
+                id="tgl_selesai_cuti" 
+                formControlName="tgl_selesai_cuti" 
+                class="flex-1 w-full" 
+                styleClass="w-full"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="keterangan" class="font-semibold">Keterangan</label>
+          <textarea 
+              pInputTextarea
+              id="keterangan" 
+              formControlName="keterangan" 
+              class="flex-1 w-full" 
+              styleClass="w-full"
+              rows="5"
+          ></textarea>
+        </div>
+      </form>
+      <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+        <p-button
+          label="Cancel"
+          styleClass="p-button-sm p-button-danger"
+          icon="pi pi-times"
+          (onClick)="handleCancel()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState == 'Edit'"
+          label="Edit"
+          styleClass="p-button-sm p-button-warning"
+          severity="primary"
+          icon="pi pi-pencil"
+          (onClick)="handleSubmit()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState == 'Add'"
+          label="Save"
+          styleClass="p-button-sm p-button-success"
+          severity="primary"
+          icon="pi pi-save"
+          (onClick)="handleSubmit()"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</app-layout>

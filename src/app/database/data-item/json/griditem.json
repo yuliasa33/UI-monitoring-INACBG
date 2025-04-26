@@ -1,0 +1,28 @@
+{
+    "columns": [
+        {
+            "field": "nama_item",
+            "header": "ITEM"
+        },
+        {
+            "field": "kode_item",
+            "header": "KODE ITEM"
+        },
+        {
+            "field": "barcode",
+            "header": "BARCODE"
+        },
+        {
+            "field": "nama_satuan",
+            "header": "SATUAN"
+        },
+        {
+            "field": "nama_supplier",
+            "header": "SUPPLIER"
+        },
+        {
+            "field": "grup_item",
+            "header": "Grup ITEM"
+        }
+    ]
+}

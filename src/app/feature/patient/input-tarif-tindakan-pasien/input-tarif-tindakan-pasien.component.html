@@ -1,0 +1,77 @@
+<app-layout [withBox]="true" [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+    <div class="w-full mx-auto">
+        <form [formGroup]="FormHeaderPemasukan">
+            <div class="grid grid-cols-2 justify-center p-2 w-full gap-3 items-center">
+                <!-- <org-input-lookup 
+                    #LookupPasien 
+                    [labelLookup]="'Pasien'" 
+                    [LookupHeaders]="'Data Pasien'" 
+                    [LookupTable]="tableLookupProps"
+                /> -->
+
+                <app-mol-input-fields [labelValue]="'Pasien'" formControlName="nama_pasien" [Disabled]="true">
+                </app-mol-input-fields>
+                 <app-mol-input-fields [labelValue]="'TGL. MASUK'" [inputType]="'date'" formControlName="tgl_masuk" /> 
+                <!-- <div class="flex flex-row w-full">
+                    <label for="">Tgl Masuk</label>
+                    <p-calendar formControlName="tgl_masuk"></p-calendar>
+                </div> -->
+                <app-mol-dropdown [DropdownAttribute]="DropDownAttributesPoli" (Change)="handleChangePoli($event)"
+                    [dataSource]="dropdownDataSource" [Labels]="'POLI'" [Disabled]="true" />
+
+                <app-mol-input-fields [labelValue]="'TGL. TRANSAKSI'" formControlName="tgl_transaksi"
+                    [inputType]="'date'" />
+
+                <app-mol-input-fields [labelValue]="'DOKTER'" formControlName="nama_dokter" />
+            </div>
+        </form>
+        <div class="grid mt-3">
+            <app-mol-table #GridTindakanMasuk [tableProps]="TableProps"
+                (onSelectedRow)="handleSelectedRowTindakanMsuk($event)" (toolbarClick)="onToolbarClick($event)" />
+        </div>
+
+        <app-mol-dialog #dialogTest [DialogAttributes]="DialogAttribute">
+            <form [formGroup]="FormInputPemasukan">
+                <div class="grid grid-cols-2 p-3 w-full gap-3">
+
+                    <div class="flex flex-col w-full gap-3">
+                        <!-- <org-input-lookup #lookupTindkan></org-input-lookup> -->
+                        <org-input-lookup #LookupTindakan [labelLookup]="'Tindakan'" [LookupHeaders]="'Data Tindakan'"
+                            [Value]="" [LookupTable]="tableTindakanAttr"></org-input-lookup>
+
+                        <app-mol-input-fields [inputType]="'text'" [labelValue]="'Dokter'" [Disabled]="true"
+                            formControlName="nama_dokter"></app-mol-input-fields>
+
+                    </div>
+
+
+                    <div class="grid w-full gap-3">
+                        <app-mol-input-fields [inputType]="'number'" [labelValue]="'Harga'" [Disabled]="true"
+                            formControlName="harga"></app-mol-input-fields>
+                        <app-mol-input-fields [inputType]="'number'" [labelValue]="'Qty'"
+                            (change)="handleChangeQty($event)" formControlName="qty"></app-mol-input-fields>
+                        <app-mol-input-fields [inputType]="'number'" [labelValue]="'Diskon (%)'" [min]="0" [max]="100"
+                            (keyup.enter)="handleKeyupEnter($event)" formControlName="diskon"></app-mol-input-fields>
+                        <app-mol-input-fields [inputType]="'number'" [labelValue]="'Potongan (Rp.)'"
+                            formControlName="potongan"></app-mol-input-fields>
+                        <app-mol-input-fields [inputType]="'number'" [labelValue]="'Total'" [Disabled]="true"
+                            formControlName="total"></app-mol-input-fields>
+
+                    </div>
+
+
+                </div>
+                <div class="flex flex-row h-auto justify-end p-2 w-full gap-3 items-center">
+                    <atom-button [button-label]="'Cancel'" [iconProps]="'pi pi-ban'" [styleClass]="'p-button-danger'"
+                        [severity]="'warning'" (PrimengClickButtons)="handleClickBatalTransaksi()"></atom-button>
+                    <atom-button [button-label]="'Simpan'" [iconProps]="'pi pi-save'" [severity]="'success'"
+                        (PrimengClickButtons)="handleClickSimpanTransaksi(FormInputPemasukan.value)"></atom-button>
+                </div>
+            </form>
+        </app-mol-dialog>
+
+        <!-- <org-lookup #lookupTindkan [LookupAttribute]="lookupTindakanAttribute"></org-lookup> -->
+
+    </div>
+    <app-transaction-records #transacationRecordsComps></app-transaction-records>
+</app-layout>

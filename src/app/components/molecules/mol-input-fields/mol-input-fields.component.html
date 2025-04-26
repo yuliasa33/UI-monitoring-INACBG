@@ -1,0 +1,8 @@
+<div class="flex flex-row w-full items-center justify-center">
+    <div class="w-6/12 font-semibold"> <atom-label [labelValue]="labelValue"></atom-label></div>
+    <div class="w-full">
+        <atom-input-fields [inputType]="inputType" [min]="min" [max]="max" [value]="value" [Disabled]="Disabled"
+        (input)="onInput($event)"
+        (blur)="onTouched()" ></atom-input-fields>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="flex flex-row w-auto items-center justify-center">
+    <div class="w-4/12 font-bold"><label for="">{{labelLookup}}</label></div>
+    <div class="w-8/12">
+        <div class="p-inputgroup">
+            <input pInputText type="text" class="font-bold" styleClass="font-bold" style="font-weight: 500;color:black" [value]="Value" placeholder="Search..." disabled/>
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-outlined" (click)="handleClickOpenModal()"></button>
+          </div>
+    </div>
+</div>
+<p-dialog
+        [header]="LookupHeaders"
+        [(visible)]="visible"
+        [modal]="true"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [style]="{ width: '80rem' }"
+        [draggable]="false"
+        [resizable]="false">
+            <app-mol-table [tableProps]="LookupData" (onDoubleClick)="onRowDoubleClick($event)" ></app-mol-table>
+    </p-dialog>

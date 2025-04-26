@@ -1,0 +1,9 @@
+<div class="card flex justify-content-center">
+    <p-calendar
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+    [placeholder]="placeholder"
+    [dateFormat]="dateFormat"
+    [showIcon]="showIcon">
+  </p-calendar>  
+</div>

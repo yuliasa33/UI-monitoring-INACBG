@@ -1,0 +1,77 @@
+<app-layout>
+  <div class="mb-2">
+    <p class="text-lg font-semibold text-gray-700">{{ entityName }}</p>
+  </div>
+  <app-mol-table
+    [tableProps]="TableProps"
+    (toolbarClick)="handleToolbarClick($event)"
+    (onSelectedRow)="handleSelectedRow($event)"
+  />
+  <p-dialog
+    [(visible)]="visible"
+    [header]="dialogHeader"
+    [modal]="true"
+    [closable]="true"
+    styleClass="w-full md:w-2/3 lg:w-1/2 h-full"
+  >
+    <div class="h-full flex flex-col justify-between">
+      <form [formGroup]="FormItem" class="flex flex-col gap-4 py-4 my-4 border-t border-gray-200 w-full">
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="kode_asal_rujukan" class="font-semibold">Kode Asal Rujukan</label>
+          <input
+            id="kode_asal_rujukan"
+            formControlName="kode_asal_rujukan"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="nama_asal_rujukan" class="font-semibold">Nama Asal Rujukan</label>
+          <input
+            id="nama_asal_rujukan"
+            formControlName="nama_asal_rujukan"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="nama_asal_rujukan" class="font-semibold">Kode wilayah diperlukan?</label>
+          <div class="flex flex-wrap gap-3">
+            <div class="flex align-items-center">
+              <p-radioButton name="is_required_kode_wilayah" formControlName="is_required_kode_wilayah" [value]="true" inputId="is_required_kode_wilayah1"></p-radioButton>
+              <label for="is_required_kode_wilayah1" class="ml-2">Ya</label>
+            </div>
+            <div class="flex align-items-center">
+              <p-radioButton name="is_required_kode_wilayah" formControlName="is_required_kode_wilayah" [value]="false" inputId="is_required_kode_wilayah2"></p-radioButton>
+              <label for="is_required_kode_wilayah2" class="ml-2">Tidak</label>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+        <p-button
+          label="Cancel"
+          styleClass="p-button-sm p-button-danger"
+          icon="pi pi-times"
+          (onClick)="handleCancel()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState === 'Edit'"
+          label="Edit"
+          styleClass="p-button-sm p-button-warning"
+          icon="pi pi-pencil"
+          (onClick)="handleSubmit()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState === 'Add'"
+          label="Save"
+          styleClass="p-button-sm p-button-success"
+          icon="pi pi-save"
+          (onClick)="handleSubmit()"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</app-layout>

@@ -1,0 +1,27 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+
+    <app-mol-table [tableProps]="TableProps"></app-mol-table>
+    <div class="flex card justify-center">
+        <p-dialog [header]="inputState == 'normal'? 'Tambah Pasien' : 'Edit Pasien'" [modal]="true" [(visible)]="visible"
+            [style]="{ width: '70rem',height:'20rem' }">
+                <form [formGroup]="FormInputDokter">
+                    <div class="grid grid-cols-2 p-6 w-full gap-3">
+                        <!-- <span class="p-text-secondary block mb-8">Update your information.</span> -->
+                        <div class="flex gap-4 items-center mb-4">
+                            <label for="username" class="w-32 font-semibold">KODE DOKTER</label>
+                            <input pInputText id="username" formControlName="kode_dokter" class="flex-auto" autocomplete="off" />
+                        </div>
+                        <div class="flex gap-4 items-center mb-4">
+                            <label for="username" class="w-32 font-semibold">NAMA DOKTER</label>
+                            <input pInputText id="username"  formControlName="nama_dokter" class="flex-auto" autocomplete="off" />
+                        </div>
+                    </div>
+                </form>
+            <div class="flex justify-end gap-2">
+                <p-button label="Cancel" styleClass="p-button-sm p-button-danger" icon="pi pi-times"  (onClick)="handleClickCancelInput()" />
+                <p-button *ngIf="inputState == 'edit'" label="Edit" styleClass="p-button-sm p-button-warning" severity="primary" icon="pi pi-pencil" (click)="handleClickSubmit(FormInputDokter.value)" /> 
+                <p-button *ngIf="inputState == 'normal'" label="Save" styleClass="p-button-sm p-button-success" severity="primary" icon="pi pi-save" (click)="handleClickSubmit(FormInputDokter.value)" /> 
+            </div>
+        </p-dialog>
+    </div>
+    </app-layout>

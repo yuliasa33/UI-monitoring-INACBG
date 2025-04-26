@@ -1,0 +1,218 @@
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .layout-header {
+    flex-shrink: 0;
+    // background-color: #343a40;
+    color: white;
+  }
+  
+  .layout-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+ .layout-sidebar {
+    padding: 12px;
+    // width: 240px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    // border-right: 1px solid #ddd;
+    // font-size: 10px;
+    // transition: all 0.3s ease-in-out;
+    scrollbar-width: thin;              /* Ukuran kecil */
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent; 
+  }
+ 
+  .layout-sidebar::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .minimize-layout-sidebar {
+    width: 54px !important;
+  }
+
+  #sidebar_items :host ::ng-deep a{
+    height: 10px;
+  }
+  
+  .layout-main {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    // transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  }
+
+
+ .p-panelmenu .p-panelmenu-header > a {
+    padding: 1.25rem;
+    border: 1px solid #dee2e6;
+    // color: #6c757d;
+    background: #f8f9fa;
+    font-weight: 100;
+    border-radius: 6px;
+    transition: box-shadow 0.2s;
+    height: 20px;
+}
+
+::ng-deep .p-panelmenu {
+  column-gap: 4px !important;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-content {
+  border: none !important;
+  margin-left: 20px !important;
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-content .p-submenu-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+::ng-deep .p-panelmenu-header {
+  display: flex !important;
+  align-items: center !important;
+  // width: 100%;
+}
+
+::ng-deep .p-panelmenu-header-link {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  background-color: transparent !important;
+  border: none !important;
+  width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px !important;
+  row-gap: 18px !important;
+}
+
+::ng-deep .p-breadcrumb ul li:last-child .p-menuitem-text{
+  font-weight: 900;
+}
+
+::ng-deep .p-menuitem-text {
+  margin-left: 4px !important;
+  line-height: 18px !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+
+::ng-deep .p-panelmenu-header-link:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+}
+
+::ng-deep .p-panelmenu-header-link:hover {
+  background-color: #EBF1F8 !important;
+  border-radius: 6px !important;
+}
+
+::ng-deep .p-panelmenu .p-menuitem-link {
+  position: relative !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  background-color: transparent !important;
+  border: none !important;
+  width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px !important;
+  row-gap: 18px !important;
+  border-radius: 6px !important;
+}
+
+::ng-deep .p-panelmenu-header-active {
+  background-color: red !important;
+}
+
+::ng-deep .p-menuitem-link:focus {
+  background-color: transparent !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+}
+
+::ng-deep .p-panelmenu .p-menuitem-link:hover {
+  background-color: #EBF1F8 !important;
+}
+
+::ng-deep .p-menuitem-icon {
+  font-size: 16px !important;
+  color: #475467 !important;
+}
+
+::ng-deep .p-panelmenu-icon {
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px !important;
+  color: #475467 !important;
+}
+
+::ng-deep .minimize-sidebar .p-panelmenu-icon {
+  display: none !important;
+}
+
+::ng-deep .minimize-sidebar .p-menuitem-text {
+  display: none !important;
+}
+
+::ng-deep .menu-active .p-panelmenu-header-link {
+  background-color: #EBF1F8 !important;
+  border-radius: 6px !important;
+}
+
+::ng-deep .menu-active .p-menuitem-link {
+  background-color: #EBF1F8 !important;
+}
+
+::ng-deep .menu-active .p-menuitem-text {
+  color: #3373BA !important;
+  font-weight: 600;
+}
+
+::ng-deep .menu-active .p-menuitem-icon {
+  color: #3373BA !important;
+}
+
+::ng-deep .custom-sidebar {
+  position: absolute !important;
+  z-index: 99;
+  background-color: white !important;
+  height: 100%;
+  border-radius: 10px 10px 0px 0px;
+  border: 1px solid #E4E7EC;
+}
+
+::ng-deep .custom-sidebar.p-sidebar-bottom {
+  position: absolute !important;
+  width: 100% !important; /* atau kamu bisa pakai width: auto jika ada padding */
+  left: 0 !important;
+  bottom: 0 !important;
+  border-radius: 10px;
+  box-shadow: none; /* opsional kalau sudah ada di parent */
+  background: transparent; /* opsional */
+  z-index: 99;
+}
+
+::ng-deep .custom-sidebar .p-sidebar-content {
+  height: 100%;
+  z-index: 99;
+}

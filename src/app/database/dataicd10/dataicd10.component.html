@@ -1,0 +1,28 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+
+    <app-filter></app-filter>
+    <app-mol-table [tableProps]="TableProps"></app-mol-table>
+    <div class="card flex justify-center">
+        <p-dialog [header]="inputState == 'normal'? 'Tambah Pasien' : 'Edit Pasien'" [modal]="true" [(visible)]="visible"
+            [style]="{ width: '70rem',height:'90rem' }">
+                <form [formGroup]="FormInputICD">
+                    <div class="grid grid-cols-2 w-full gap-3 p-6">
+                        <!-- <span class="p-text-secondary block mb-8">Update your information.</span> -->
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="username" class="font-semibold w-32">KODE ICD</label>
+                            <input pInputText id="username" formControlName="kode_icd" class="flex-auto" autocomplete="off" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="username" class="font-semibold w-32">NAMA ICD</label>
+                            <input pInputText id="username"  formControlName="nama_icd" class="flex-auto" autocomplete="off" />
+                        </div>
+                    </div>
+                </form>
+            <div class="flex justify-end gap-2">
+                <!-- <p-button label="Cancel" styleClass="p-button-sm p-button-danger" icon="pi pi-times"  (onClick)="handleClickCancelInput()" />
+                <p-button label="Save" styleClass="p-button-sm p-button-success" severity="primary" icon="pi pi-save" (click)="handleClickSubmit(FormInputNegara.value)" /> 
+            </div> -->
+            </div>
+        </p-dialog>
+    </div>
+    </app-layout>

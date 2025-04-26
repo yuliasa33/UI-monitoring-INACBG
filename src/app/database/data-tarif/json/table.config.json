@@ -1,0 +1,17 @@
+{
+    "columns":[
+        {
+            "field": "kode_setup_tarif", 
+            "header": "KODE TARIF"
+        },
+        {
+           "field": "nama_setup_tarif", 
+           "header": "NAMA TARIF"
+        },
+        {
+           "field":"nominal_tarif",
+           "header":"HARGA",
+           "type":"currency"
+        }
+    ]
+}

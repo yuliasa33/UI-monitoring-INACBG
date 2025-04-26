@@ -1,0 +1,54 @@
+<app-layout [ButtonNav]="ButtonNav">
+    <!-- <org-lookup #lookupItem (seletedRow)="handleSelectedData($event)" [LookupAttribute]="LookupAttribute"></org-lookup> -->
+    <app-filter></app-filter>
+    <app-mol-table 
+        [tableProps]="TableProps" 
+        (onSelectedRow)="handelSelectedRow($event)"
+        (toolbarClick)="handleToolbarClick($event)"
+    />
+
+    <!--modal dilalog-->
+    <div class="card flex justify-center">
+        <p-dialog [header]="inputState == 'normal'? 'Tambah Pasien' : 'Edit Pasien'" [modal]="true"
+            [(visible)]="visible" [style]="{ width: '50%',height:'calc(100vh - 21rem)' }" (onHide)="resetForm()">
+            <form [formGroup]="FormItem">
+                <div class="grid grid-cols-2 w-full gap-3 p-6">
+                    <app-mol-input-fields 
+                        [inputType]="'text'" 
+                        [labelValue]="'KODE ITEM'"
+                        formControlName="kode_item" 
+                    />
+                    <app-mol-input-fields
+                        [inputType]="'text'"
+                        [labelValue]="'NAMA ITEM'"
+                        formControlName="nama_item"
+                    />
+
+                    <app-mol-dropdown 
+                        [dataSource]="setupItemService.dataSatuan | async" 
+                        Labels="SATUAN"
+                        formControlName="satuan"
+                        [DropdownAttribute]="DropdownSatuanAttributes" 
+                    />
+                </div>
+            </form>
+            <div class="flex justify-end gap-2">
+                <p-button 
+                    label="Cancel" 
+                    styleClass="p-button-sm p-button-danger" 
+                    icon="pi pi-times"
+                    (onClick)="handleClickCancelInput()" 
+                />
+                <p-button 
+                    label="Save" 
+                    styleClass="p-button-sm p-button-success" 
+                    severity="primary" 
+                    icon="pi pi-save"
+                    (click)="handleClickSubmit()" 
+                />
+            </div>
+        </p-dialog>
+    </div>
+
+
+</app-layout>

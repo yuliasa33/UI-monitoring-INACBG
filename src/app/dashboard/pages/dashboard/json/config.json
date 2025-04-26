@@ -1,0 +1,184 @@
+{
+    "GridColumns":[
+        { "field": "no_pendaftaran", "header": "No. Pendaftaran" },
+        { "field": "nik", "header": "NIK" },
+        { "field": "no_rm", "header": "No. RM" },
+        { "field": "nama_pasien", "header": "Nama Pasien" },
+        { "field": "no_sep", "header": "No. SEP" },
+        { "field": "no_kartu", "header": "No. Kartu" },
+        { "field": "nilai_klaim", "header": "Nilai Klaim","type":"currency" },
+        { "field": "nilai_billing", "header": "Nilai Billing","type":"currency" },
+        { "field": "selisih_persen", "header": "Selisih (%)" ,"type":"percentage" },
+        { "field": "last_klaim", "header": "Last Klaim" },
+        { "field": "jumlah_hari", "header": "Jumlah Hari" },
+        { "field": "tanggal_masuk", "header": "Tanggal Masuk" ,"type":"date" },
+        { "field": "tanggl_keluar", "header": "Tanggal Keluar","type":"date" },
+        { "field": "kode_icd10_inacbg", "header": "ICD-10 INACBG" },
+        { "field": "kode_icd10_simgos", "header": "ICD-10 Simgos" },
+        { "field": "diagnosa_inacbg", "header": "Diagnosa INACBG" },
+        { "field": "diagnosa_simgos", "header": "Diagnosa Simgos" },
+        { "field": "kode_icd9_inacbg", "header": "ICD-9 INACBG" },
+        { "field": "kode_icd9_simgos", "header": "ICD-9 Simgos" },
+        { "field": "procedure_inacbg", "header": "Procedure INACBG" },
+        { "field": "procedure_simgos", "header": "Procedure Simgos" },
+        { "field": "jenis_rawat", "header": "Jenis Rawat" },
+        { "field": "cara_masuk", "header": "Cara Masuk" },
+        { "field": "cara_pulang", "header": "Cara Pulang" }
+      ],
+      "DummyDatasource":[
+        {
+          "no_pendaftaran": "REG20250425001",
+          "nik": "3175092301980001",
+          "no_rm": "RM123456",
+          "nama_pasien": "John Doe",
+          "no_sep": "SEP1234567890",
+          "no_kartu": "KRT123456789",
+          "nilai_klaim": 7500000,
+          "nilai_billing": 10000000,
+          "selisih_persen": 25,
+          "last_klaim": "2025-04-20T10:30:00",
+          "jumlah_hari": 5,
+          "tanggal_masuk": "2025-04-15",
+          "tanggl_keluar": "2025-04-20",
+          "kode_icd10_inacbg": "A00.0",
+          "kode_icd10_simgos": "A00.1",
+          "diagnosa_inacbg": "Kolera akibat Vibrio cholerae 01",
+          "diagnosa_simgos": "Kolera akibat Vibrio cholerae 02",
+          "kode_icd9_inacbg": "99.01",
+          "kode_icd9_simgos": "99.02",
+          "procedure_inacbg": "Pemberian infus",
+          "procedure_simgos": "Pemberian injeksi",
+          "jenis_rawat": "Rawat Inap",
+          "cara_masuk": "IGD",
+          "cara_pulang": "Pulang Sendiri"
+        },
+        {
+          "no_pendaftaran": "REG20250425002",
+          "nik": "3175092302980002",
+          "no_rm": "RM654321",
+          "nama_pasien": "Jane Smith",
+          "no_sep": "SEP0987654321",
+          "no_kartu": "KRT987654321",
+          "nilai_klaim": 5000000,
+          "nilai_billing": 5000000,
+          "selisih_persen": 0,
+          "last_klaim": "2025-04-21T14:00:00",
+          "jumlah_hari": 3,
+          "tanggal_masuk": "2025-04-18",
+          "tanggl_keluar": "2025-04-21",
+          "kode_icd10_inacbg": "B01.0",
+          "kode_icd10_simgos": "B01.1",
+          "diagnosa_inacbg": "Cacar air tanpa komplikasi",
+          "diagnosa_simgos": "Cacar air dengan komplikasi ringan",
+          "kode_icd9_inacbg": "88.71",
+          "kode_icd9_simgos": "88.72",
+          "procedure_inacbg": "Pemeriksaan darah",
+          "procedure_simgos": "Pemeriksaan urine",
+          "jenis_rawat": "Rawat Jalan",
+          "cara_masuk": "Rujukan",
+          "cara_pulang": "Rujuk ke RS lain"
+        },
+          {
+            "no_pendaftaran": "2504100001",
+            "nik": "",
+            "no_rm": "111",
+            "nama_pasien": "Naruto",
+            "no_sep": "",
+            "no_kartu": "",
+            "nilai_klaim": 0,
+            "nilai_billing": 310000,
+            "selisih_persen": 999,
+            "jumlah_hari": 14,
+            "tanggal_masuk": "2025-04-10T14:06:07.000Z",
+            "tanggl_keluar": "2025-04-25T06:12:07.042Z",
+            "kode_icd10_inacbg": [],
+            "kode_icd10_simgos": [
+              "J20.1",
+              "O00.0"
+            ],
+            "diagnosa_inacbg": [],
+            "diagnosa_simgos": [
+              " Acute bronchitis due to haemophilus influenzae ",
+              " Abdominal pregnancy "
+            ],
+            "kode_icd9_inacbg": [],
+            "kode_icd9_simgos": [],
+            "procedure_inacbg": [],
+            "procedure_simgos": [],
+            "jenis_rawat": null,
+            "cara_masuk": null,
+            "cara_pulang": null,
+            "last_klaim": null
+          }
+    
+      ],
+      "DummyICD10": [
+        {
+          "id": "4247",
+          "kode_icd_10": "J20.1",
+          "nama_icd_10": " Acute bronchitis due to haemophilus influenzae ",
+          "sab": "ICD10_2010 "
+        },
+        {
+          "id": "4250",
+          "kode_icd_10": "J20.4",
+          "nama_icd_10": " Acute bronchitis due to parainfluenza virus ",
+          "sab": "ICD10_2010 "
+        }
+      ],
+      "DummyICD9": [
+        {
+          "id": "2798",
+          "kode_icd_9": "75.37",
+          "nama_icd_9": "Amnioinfusion",
+          "sab": "ICD9CM_2010"
+        },
+        {
+          "id": "17",
+          "kode_icd_9": "00.19",
+          "nama_icd_9": "Disruption of blood brain barrier via infusion (bbbd)",
+          "sab": "ICD9CM_2010"
+        }
+      ],
+      "DummyCaraMasuk":
+      [
+        {
+          "id_cara_masuk": 2,
+          "nama_cara_masuk": "Patah Hati",
+          "is_active": true,
+          "created_at": "2025-03-12T03:20:31.432Z",
+          "updated_at": "2025-03-12T03:20:31.432Z"
+        },
+        {
+          "id_cara_masuk": 1,
+          "nama_cara_masuk": "Patah Tulang",
+          "is_active": true,
+          "created_at": "2025-03-12T03:20:24.794Z",
+          "updated_at": "2025-03-12T03:20:24.794Z"
+        }
+      ],
+      "DummyCaraPulang":
+      [
+        {
+          "id_cara_pulang": 4,
+          "cara_pulang": "Pulang Ke Rahmatullah",
+          "is_active": true,
+          "created_at": "2024-12-13T15:34:49.568Z",
+          "updated_at": "2024-12-13T15:34:49.568Z"
+        }
+      ],
+      "DummyJenisRawat":
+      [
+        {
+          "id_jenis_rawat": 1,
+          "nama_jenis_rawat": "Testing",
+          "is_active": true,
+          "created_at": "2024-12-08T06:14:17.031Z",
+          "updated_at": "2024-12-08T06:14:17.031Z"
+        }
+      ]
+  
+  
+  
+      
+}

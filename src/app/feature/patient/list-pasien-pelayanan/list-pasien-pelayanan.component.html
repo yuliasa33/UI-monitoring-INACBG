@@ -1,0 +1,8 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+
+<app-mol-table [tableProps]="TableProperties" (toolbarClick)="handleToolbarClick($event)" (onSelectedRow)="handleSelectedRow($event)"></app-mol-table>
+
+<app-batal-admisi #BatalAdmisiCOmps [namaPasien]="selectedRow?.nama_pasien" (sendDataForm)="handleRecieveData($event)"></app-batal-admisi>
+
+</app-layout>
+  

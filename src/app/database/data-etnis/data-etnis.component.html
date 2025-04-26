@@ -1,0 +1,54 @@
+<app-layout>
+  <div class="mb-2">
+    <p class="text-lg font-semibold text-gray-700">{{ entityName }}</p>
+  </div>
+  <app-mol-table
+    [tableProps]="TableProps"
+    (toolbarClick)="handleToolbarClick($event)"
+    (onSelectedRow)="handleSelectedRow($event)"
+  />
+  <p-dialog
+    [(visible)]="visible"
+    [header]="dialogHeader"
+    [modal]="true"
+    [closable]="true"
+    styleClass="w-full md:w-2/3 lg:w-1/2 h-full"
+  >
+    <div class="h-full flex flex-col justify-between">
+      <form [formGroup]="FormItem" class="flex gap-4 py-4 my-4 border-t border-gray-200 w-full">
+        <div class="flex flex-col gap-2 items-start w-full flex-1">
+          <label for="etnis" class="font-semibold">Etnis</label>
+          <input
+            id="etnis"
+            formControlName="etnis"
+            type="text"
+            pInputText
+            class="flex-1 w-full"
+          />
+        </div>
+      </form>
+      <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+        <p-button
+          label="Cancel"
+          styleClass="p-button-sm p-button-danger"
+          icon="pi pi-times"
+          (onClick)="handleCancel()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState === 'Edit'"
+          label="Edit"
+          styleClass="p-button-sm p-button-warning"
+          icon="pi pi-pencil"
+          (onClick)="handleSubmit()"
+        ></p-button>
+        <p-button
+          *ngIf="inputState === 'Add'"
+          label="Save"
+          styleClass="p-button-sm p-button-success"
+          icon="pi pi-save"
+          (onClick)="handleSubmit()"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</app-layout>
