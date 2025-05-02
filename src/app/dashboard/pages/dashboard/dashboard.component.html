@@ -158,48 +158,48 @@
 
                 <!-- Text Fields -->
                 <div>
-                  <label class="block text-sm font-medium mb-1">No. Pendaftaran</label>
-                  <input pInputText formControlName="no_pendaftaran" class="w-full" />
+                  <label class="block text-md font-medium mb-1">No. Pendaftaran</label>
+                  <input pInputText readonly  formControlName="no_pendaftaran" class="w-full" />
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">NIK</label>
-                  <input pInputText formControlName="nik" class="w-full" />
+                  <label class="block text-md font-medium mb-1">NIK</label>
+                  <input pInputText readonly  formControlName="nik" class="w-full" />
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">No. RM</label>
-                  <input pInputText formControlName="no_rm" class="w-full" />
+                  <label class="block text-md font-medium mb-1">No. RM</label>
+                  <input pInputText readonly  formControlName="no_rm" class="w-full" />
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">Nama Pasien</label>
-                  <input pInputText formControlName="nama_pasien" class="w-full" />
+                  <label class="block text-md font-medium mb-1">Nama Pasien</label>
+                  <input pInputText readonly  formControlName="nama_pasien" class="w-full" />
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">No. SEP</label>
-                  <input pInputText formControlName="no_sep" class="w-full" />
+                  <label class="block text-md font-medium mb-1">No. SEP</label>
+                  <input pInputText readonly  formControlName="no_sep" class="w-full" />
                 </div>
               
                 <!-- Datepickers -->
                 <div>
-                  <label class="block text-sm font-medium mb-1">Tanggal Masuk</label>
-                  <p-calendar formControlName="tanggal_masuk" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
+                  <label class="block text-md font-medium mb-1">Tanggal Masuk</label>
+                  <p-calendar formControlName="tanggal_masuk" [disabled]="true" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">Tanggal Keluar</label>
+                  <label class="block text-md font-medium mb-1">Tanggal Keluar</label>
                   <p-calendar formControlName="tanggal_keluar" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
                 </div>
               
                 <!-- Dropdowns -->
                 <div>
-                  <label class="block text-sm font-medium mb-1">Cara Masuk</label>
+                  <label class="block text-md font-medium mb-1">Cara Masuk</label>
                   <p-dropdown 
                     [options]="caraMasukOptions" 
                     formControlName="cara_masuk" 
-                    optionLabel="nama_cara_masuk"
+                    optionLabel="keterangan"
                     placeholder="Pilih Cara Masuk" 
                     class="w-full" 
                     styleClass="w-full">
@@ -207,7 +207,7 @@
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">Jenis Rawat</label>
+                  <label class="block text-md font-medium mb-1">Jenis Rawat</label>
                   <p-dropdown 
                   styleClass="w-full"
                     [options]="jenisRawatOptions" 
@@ -219,7 +219,7 @@
                 </div>
               
                 <div>
-                  <label class="block text-sm font-medium mb-1">Cara Pulang</label>
+                  <label class="block text-md font-medium mb-1">Cara Pulang</label>
                   <p-dropdown 
                     styleClass="w-full"
                     [options]="caraPulangOptions" 
@@ -232,7 +232,7 @@
               
                 <!-- MultiSelects -->
                 <div class="col-span-2">
-                  <label class="block text-sm font-medium mb-1">Diagnosa</label>
+                  <label class="block text-md font-medium mb-1">Diagnosa</label>
                   <p-multiSelect 
                     styleClass="w-full"
                     [options]="diagnosaOptions" 
@@ -251,7 +251,7 @@
                 </div>
               
                 <div class="col-span-2">
-                  <label class="block text-sm font-medium mb-1">Procedure</label>
+                  <label class="block text-md font-medium mb-1">Procedure</label>
                   <p-multiSelect 
                   styleClass="w-full"
                     [options]="procedureOptions" 

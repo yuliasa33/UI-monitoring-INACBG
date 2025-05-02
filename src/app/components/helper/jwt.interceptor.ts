@@ -6,10 +6,11 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private cookieService:CookieService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -20,12 +21,24 @@ export class JwtInterceptor implements HttpInterceptor {
 
     const parsedToken = JSON.parse(token)
     // Clone the request to add the Authorization header if the token exists
-    if (parsedToken) {
+    // if (parsedToken) {
+    //   request = request.clone({
+    //     setHeaders: {
+    //       Authorization: `Bearer ${JSON.parse(parsedToken).token}`, // Add the JWT token to the headers
+    //     },
+    //   });
+    // }
+
+
+    const cookiesTOken = JSON.stringify(this.cookieService.get('static_token'))
+    const static_token = cookiesTOken
+
+    if(static_token){
       request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${JSON.parse(parsedToken).token}`, // Add the JWT token to the headers
-        },
-      });
+        setHeaders:{
+          Authorization: `${JSON.parse(static_token)}`
+        }
+      })
     }
 
     return next.handle(request);

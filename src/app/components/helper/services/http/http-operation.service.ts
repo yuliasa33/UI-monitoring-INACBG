@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { UtilityService } from '../utility/utility.service';
@@ -26,6 +26,21 @@ export class HttpOperationService {
           return this.handlingError(result)
         }
       }))
+  }
+
+  onGetRequestWithParams(url:any,data:any):Observable<HttpResponseModel>{
+    
+    let httpParam = new HttpParams()
+    .set('page',1)
+    .set('count',100)
+    return this.httpClient.get<any>(url,{params:httpParam})
+    .pipe(map((result: any) => {
+      if (result.responseResult) {
+        return result
+      } else {
+        return this.handlingError(result)
+      }
+    }))
   }
 
   onPostRequest(url: any, data: any): Observable<HttpResponseModel<any>> {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from "../../../components/layout/layout.component";
 import { ChartModule } from 'primeng/chart';
@@ -19,6 +19,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CookieService } from 'ngx-cookie-service';
+import { static_token } from 'src/environment/environment';
+import { SetupCaraMasukService } from 'src/app/shared/service/setup-cara-masuk/setup-cara-masuk.service';
+import { SetupJenisRawatService } from 'src/app/shared/service/setup-jenis-rawat/setup-jenis-rawat.service';
+import { SetupCaraPulangService } from 'src/app/shared/service/setup-cara-pulang/setup-cara-pulang.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -26,7 +31,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit ,AfterViewInit {
+  
   lineChartData: any
   lineChartOptions: any
 
@@ -55,17 +61,17 @@ export class DashboardComponent implements OnInit {
       command:(e:any)=>{
         this.onClaim(e)
       }
-    },
-    {
-      label: 'Detail',
-      icon: 'pi pi-eye',
-      command:(e:any)=>{
-        this.setDetail()
-      }
     }
+    // {
+    //   label: 'Detail',
+    //   icon: 'pi pi-eye',
+    //   command:(e:any)=>{
+    //     this.setDetail()
+    //   }
+    // }
   ]
 
-  caraMasukOptions = this.JSONCONF.DummyCaraMasuk
+  caraMasukOptions:any[] = []
   caraPulangOptions = this.JSONCONF.DummyCaraPulang
   diagnosaOptions = this.JSONCONF.DummyICD10
   procedureOptions = this.JSONCONF.DummyICD9
@@ -75,17 +81,12 @@ export class DashboardComponent implements OnInit {
  
   public tableProps:TableProps.Table = {
     columns:[
-      {
-      header:'Action'
-    },
-    ...this.JSONCONF.GridColumns,
-      
+    ...this.JSONCONF.GridColumns
     ],
     datasource:this.JSONCONF.DummyDatasource,
     pagination:10,
     filteredBy:[],
     toolbars:[]
-
   }
 
   DialogAttributes:DialogCompsModels.Attributes ={
@@ -111,15 +112,34 @@ export class DashboardComponent implements OnInit {
   state_total_presentase:any = 0
 
   constructor(private store:Store,
-              private formBuilder:FormBuilder
-  ) {
-  
-  }
+              private formBuilder:FormBuilder,
+              private cookiesService:CookieService,
+              private setupCaraMasukService:SetupCaraMasukService,
+              private setupJenisRawatService:SetupJenisRawatService,
+              private setupCaraPulangService:SetupCaraPulangService
+  ) {}
 
   ngOnInit(): void {
     // this.store.dispatch(new GetAllItem())
     this.onSetAttrtibuteForm()
     this.SummaryTotal()
+    this.getSetup()
+  }
+
+  ngAfterViewInit(): void {
+    
+  }
+
+  getSetup():void{
+    this.setupCaraMasukService.setDataSource()
+    this.setupJenisRawatService.setDataSource()
+    this.setupCaraPulangService.setDataSource()
+    setTimeout(()=>{
+      this.caraMasukOptions = this.setupCaraMasukService.ListSetupCaraMasuk$.getValue()
+      this.jenisRawatOptions = this.setupJenisRawatService.ListSetupJenisRawat$.getValue()
+      this.caraPulangOptions = this.setupCaraPulangService.ListCaraPulang$.getValue()
+    },800)
+    
   }
 
   SummaryTotal():void{
@@ -153,7 +173,7 @@ export class DashboardComponent implements OnInit {
       nama_pasien: [''],
       no_sep: [''],
       tanggal_masuk: [null],
-      tanggal_keluar: [null],
+      tanggal_keluar: [''],
       cara_masuk: [null],
       jenis_rawat: [null],
       cara_pulang: [null],
@@ -177,11 +197,14 @@ export class DashboardComponent implements OnInit {
     return ''
   }
 
-  onSetForm(Form:any):void{
-    Form.tanggal_masuk = new Date(Form.tanggal_masuk)
-    Form.tanggal_keluar = new Date(Form.tanggal_keluar)
-    delete Form.last_klaim
-    this.Form.setValue(Form)
+  onSetForm(FormValue:any):void{
+    this.formClaim.get('no_pendaftaran')?.setValue(FormValue.no_pendaftaran)
+    this.formClaim.get('nik')?.setValue(FormValue.nik)
+    this.formClaim.get('no_rm')?.setValue(FormValue.no_rm)
+    this.formClaim.get('no_sep')?.setValue(FormValue.no_sep)
+    this.formClaim.get('nama_pasien')?.setValue(FormValue.nama_pasien)
+    this.formClaim.get('tanggal_masuk')?.setValue(new Date(FormValue.tanggal_masuk))
+    this.formClaim.get('tanggal_keluar')?.setValue(new Date(FormValue.tanggl_keluar))
   }
 
   openModalClaim():void{
@@ -198,7 +221,7 @@ export class DashboardComponent implements OnInit {
      this.DialogAttributes.Headers = `Claim Pasien An ${this.selectedData.nama_pasien}`
     this.openModalClaim()
     this.formState = 'claim'
-    // this.onSetForm(this.selectedData)
+     this.onSetForm(this.selectedData)
     console.log(this.selectedData)
   }
 

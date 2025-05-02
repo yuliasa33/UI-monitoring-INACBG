@@ -11,6 +11,8 @@ import { GETALLICD10 } from './database/store/database-action/data-icd.action';
 import { GETALLDOKTERACTION } from './database/store/database-action/data-dokter.action';
 import { GETALLPOLI } from './database/store/database-action/data-poli.action';
 import { GetAllTarif } from './database/store/database-action/data-tarif.action';
+import { CookieService } from 'ngx-cookie-service';
+import { static_token } from 'src/environment/environment';
 
 
 @Component({
@@ -42,9 +44,9 @@ export class AppComponent implements OnInit {
   constructor(public utilityService: UtilityService,
               private store:Store,
               private router:Router,
-              
+              private cookiesService:CookieService
   ) {
-    
+    this.cookiesService.set('static_token',static_token)
     this.isLoading = this.utilityService.loading$;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
