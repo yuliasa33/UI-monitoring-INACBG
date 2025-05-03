@@ -22,19 +22,19 @@ const routes: Routes = [
       breadcrumbs:[{label:'',icon:'pi pi-home'},{label:'Dashboard'}]
     ,
   animation:'Dashboard'}
-  }
+  },
   // {path:'Patient',
-  //   canActivate:[AuthGuard],
+  //   // canActivate:[AuthGuard],
   //   loadComponent:async () => (await import('./feature/patient/data-patient/data-patient.component')).DataPatientComponent,
   //   data:{
   //     title:'Patient',
   //     breadcrumbs:[{label:'',icon:'pi pi-home'},{label:'Patient'}]}
-  // },
-  // {
-  //   path:'Patient',
-  //   loadChildren:async()=>(await import('./feature/patient/patient.routes')).PatientRoutes,
-  //   canActivate:[AuthGuard]
-  // },
+  // }
+  {
+    path:'Patient',
+    loadChildren:async()=>(await import('./feature/patient/patient.routes')).PatientRoutes,
+    // canActivate:[AuthGuard]
+  }
   // {
   //   path:'Database',
   //   loadChildren:async ()=>(await (import('./database/database.routes'))).databaseRoutes,

@@ -150,7 +150,9 @@ export class AdmisiPasienComponent implements OnInit,OnDestroy {
   @ViewChild('LookupDokter') LookupDokter!:InputLookupComponent
   
   tableLookupPropsDokter:TableProps.Table = {
-    columns:[...this.lookupConfDokter.columns,
+    columns:
+    [
+      ...this.lookupConfDokter.columns,
           {
             type:'button',
             header:'Action',
