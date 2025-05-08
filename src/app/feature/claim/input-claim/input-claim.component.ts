@@ -351,28 +351,20 @@ export class InputClaimComponent implements OnInit, OnDestroy {
   //Save Segmentes
 
   onSave():void{
-
-    let diagnosa = this.selectedDiagnosaINACBG.map((result: any) => {
-      return result.label
-    })
-    const kode_icd_10_icacbg = diagnosa.map((item:any) => item.split(' - ')[0]);
-    const nama_icd_10_icacbg = diagnosa.map((item:any) => item.split(' - ')[1]);
-
-    let procedure = this.selectedDiagnosaINACBG.map((result: any) => {
-      return result.label
-    })
-    const kode_icd_9_icacbg = procedure.map((item:any) => item.split(' - ')[0]);
-    const nama_icd_9_icacbg = procedure.map((item:any) => item.split(' - ')[1]);
+    const kode_icd_10_icacbg  = this.selectedDiagnosaINACBG.map((item:any) => item.code);
+    const nama_icd_10_icacbg  = this.selectedDiagnosaINACBG.map((item:any) => item.label);
+    const kode_icd_9_icacbg   = this.selectedProcedureINACBG.map((item:any) => item.code);
+    const nama_icd_9_icacbg   = this.selectedProcedureINACBG.map((item:any) => item.label);
 
     const form = this.formClaim.value
      console.log(this.formClaim)
         let payload:INACBG.CLAIMINACBG = {
-          no_pendaftaran: form.no_pendaftaran,
-          nik: form.nik,
-          no_rm: form.no_rm,
-          nama_pasien: form.nama_pasien,
-          no_sep: form.no_sep,
-          no_kartu: form.no_kartu,
+          no_pendaftaran  : form.no_pendaftaran,
+          nik             : form.nik,
+          no_rm           : form.no_rm,
+          nama_pasien     : form.nama_pasien,
+          no_sep          : form.no_sep,
+          no_kartu        : form.no_kartu,
           nilai_klaim: this.inaCBGService.SelectedDataClaimObserver.value.nilai_klaim,
           nilai_billing: this.inaCBGService.SelectedDataClaimObserver.value.nilai_billing,
           selisih_persen: this.inaCBGService.SelectedDataClaimObserver.value.selisih_persen,
@@ -396,18 +388,18 @@ export class InputClaimComponent implements OnInit, OnDestroy {
         }
     
         console.log(JSON.stringify(payload))
-         this.inacbgService.onClaimINACBG(payload).subscribe(result=>{
-           console.log(result)
-           if(result.responseResult){
-            this.resetClaimForm()
-             this.utilityService.onShowingCustomAlert('success','Yeayy Berhasil Claim nih',result.message)
-             .then(()=>{
-              this.onBack()
-             })
-           }else{
-             this.utilityService.onFailedToast(result.message)
-           }
-         })
+          this.inacbgService.onClaimINACBG(payload).subscribe(result=>{
+            console.log(result)
+            if(result.responseResult){
+             this.resetClaimForm()
+              this.utilityService.onShowingCustomAlert('success','Yeayy Berhasil Claim nih',result.message)
+              .then(()=>{
+               this.onBack()
+              })
+            }else{
+              this.utilityService.onFailedToast(result.message)
+            }
+          })
   }
 
 
