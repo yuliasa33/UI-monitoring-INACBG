@@ -23,6 +23,14 @@ const routes: Routes = [
     ,
   animation:'Dashboard'}
   },
+  {path:'input-claim',
+    loadComponent:async () => (await import('./feature/claim/input-claim/input-claim.component')).InputClaimComponent,
+    data:{
+      title:'Input Claim',
+      breadcrumbs:[{label:'',icon:'pi pi-flag'},{label:'Input Claim'}]
+    ,
+  animation:'Input Claim'}
+  },
   // {path:'Patient',
   //   // canActivate:[AuthGuard],
   //   loadComponent:async () => (await import('./feature/patient/data-patient/data-patient.component')).DataPatientComponent,

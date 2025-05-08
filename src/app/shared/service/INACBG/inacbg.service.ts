@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { HttpOperationService } from 'src/app/components/helper/services/http/http-operation.service';
 import { UtilityService } from 'src/app/components/helper/services/utility/utility.service';
 import { INACBG } from '../../model/inacbg.mode';
@@ -11,10 +11,31 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class InacbgService {
 
+  SelectedDataClaimObserver:any = new BehaviorSubject<any>({})
+
   constructor(private httpOperationService:HttpOperationService,
               private httpClient:HttpClient,
               private utilityService:UtilityService
   ) { }
+
+  onSetDataClaim(Data:any):void{
+  
+    localStorage.setItem('Data-Claim',JSON.stringify(Data))
+  }
+
+
+  onGetDataClaim(){
+    const local:any = localStorage.getItem('Data-Claim')
+    const Data:any = JSON.parse(local)
+    this.SelectedDataClaimObserver.next(Data)
+    const result = this.SelectedDataClaimObserver.value
+    return result
+  }
+
+  DestroyDataClaim():void{
+    this.SelectedDataClaimObserver.next({})
+    localStorage.removeItem('Data-Claim')
+  }
 
   onClaimINACBG(data:INACBG.CLAIMINACBG):Observable<any>{
     return this.httpOperationService.onPostRequest(`${environment.Api}v1/inacbg/claim`,data)

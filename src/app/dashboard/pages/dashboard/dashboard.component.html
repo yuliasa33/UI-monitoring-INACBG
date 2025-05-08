@@ -258,6 +258,15 @@
                     </ng-template> -->
         </p-multiSelect>
       </div>
+      <div class="col-span-2">
+        <label class="block text-md font-medium mb-1">Diagnosa SIMGOS</label>
+        <p-multiSelect styleClass="w-full" [filter]="true" [options]="diagnosaOptions" optionLabel="nama_icd_10"
+          display="chip"  formControlName="diagnosa_simgos" appendTo="body" [disabled]="true" [readonly]="true"
+          [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }" class="w-full" [lazy]="true"
+          [(ngModel)]="selectedDiagnosaSimgos"
+         >
+        </p-multiSelect>
+      </div>
 
       <div class="col-span-2">
         <label class="block text-md font-medium mb-1">Procedure</label>
@@ -268,6 +277,17 @@
           (onChange)="onChangeProcedure($event)" placeholder="Pilih Procedure">
         </p-multiSelect>
       </div>
+
+      <div class="col-span-2">
+        <label class="block text-md font-medium mb-1">Procedure SIMGOS</label>
+        <p-multiSelect styleClass="w-full" [options]="procedureOptions" optionLabel="label" display="chip"
+        formControlName="procedure_simgos" appendTo="body" [disabled]="true" [readonly]="true"
+          [panelStyle]="{ 'width':'100%','position': 'absolute','top':'-200px' }" class="w-full"
+          pTooltip="{{selectedItemProcedure}}" tooltipPosition="top" tooltipStyleClass="wide-tooltip"
+         >
+        </p-multiSelect>
+      </div>
+
 
       <!-- Submit -->
 

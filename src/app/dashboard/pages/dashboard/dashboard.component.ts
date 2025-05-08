@@ -30,6 +30,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InacbgService } from 'src/app/shared/service/INACBG/inacbg.service';
 import { INACBG } from 'src/app/shared/model/inacbg.mode';
 import { UtilityService } from 'src/app/components/helper/services/utility/utility.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -52,6 +53,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   radarOptions: any
 
   JSONCONF = CONF
+
+  selectedDiagnosaSimgos:any = []
 
   modifiedData = this.JSONCONF.DummyDatasource.map(el => ({
     ...el,
@@ -139,6 +142,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   kode_icd_9_icacbg:any[] = []
   nama_icd_9_icacbg:any[] = []
 
+  diagnosaSimgosValue:any = ['A42.1 -  Abdominal actinomycosis ', 'R10 -  Abdominal and pelvic pain ']
+
   constructor(private store: Store,
     private formBuilder: FormBuilder,
     private cookiesService: CookieService,
@@ -147,12 +152,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private setupCaraPulangService: SetupCaraPulangService,
     private setupIcd10Service: SetupIcd10Service,
     private inacbgService:InacbgService,
-    private utilityService:UtilityService
+    private utilityService:UtilityService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
     this.onSetAttrtibuteForm()
-    this.getSetup()
+    // this.getSetup()
     this.onGetPendaftaran()
   }
 
@@ -206,6 +212,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     console.log(this.tableProps.datasource)
   }
 
+  
+
   onSetAttrtibuteForm(): void {
     this.Form = this.formBuilder.group({
       no_pendaftaran: [''],
@@ -235,6 +243,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       cara_pulang: ['',[Validators.required]],
       diagnosa: [[]],
       procedure: [[]],
+      diagnosa_simgos:[[]],
+      procedure_simgos:[[]]
     });
   }
 
@@ -274,11 +284,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   onClaim(data: any): void {
-    this.DialogAttributes.Headers = `Claim Pasien An ${this.selectedData.nama_pasien}`
-    this.openModalClaim()
-    this.formState = 'claim'
-    this.onSetForm(this.selectedData)
-    console.log(this.selectedData)
+    // this.DialogAttributes.Headers = `Claim Pasien An ${this.selectedData.nama_pasien}`
+    // this.openModalClaim()
+    // this.formState = 'claim'
+    // let trimmedDiagnosa = this.selectedData.diagnosa_simgos.map((d:any) => d.trim());
+    // this.selectedDiagnosaSimgos = this.diagnosaOptions.filter(opt =>
+    //   trimmedDiagnosa.includes(opt.nama_icd_10.trim())
+    // );
+    // this.onSetForm(this.selectedData)
+    // console.log(this.selectedData)
+    // console.log(this.selectedDiagnosaSimgos)
+    this.inacbgService.onSetDataClaim(this.selectedData)
+    this.router.navigateByUrl('input-claim')
   }
 
   selectedDataRightClick(args: any): void {

@@ -1,0 +1,234 @@
+<app-layout [ButtonNav]="ButtonNav" (onClickButtonNav)="handleClickButtonNav($event)">
+  <form [formGroup]="formClaim" class="grid grid-cols-2 gap-4 p-6 bg-white rounded-lg shadow-lg">
+
+    <!-- Text Fields -->
+    <div>
+      <label class="block text-md font-medium mb-1">No. Pendaftaran</label>
+      <input pInputText readonly formControlName="no_pendaftaran" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">NIK</label>
+      <input pInputText readonly formControlName="nik" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">No. RM</label>
+      <input pInputText readonly formControlName="no_rm" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">Nama Pasien</label>
+      <input pInputText readonly formControlName="nama_pasien" class="w-full" />
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">No. SEP</label>
+      <input pInputText readonly formControlName="no_sep" class="w-full" />
+    </div>
+
+    <!-- Datepickers -->
+    <div>
+      <label class="block text-md font-medium mb-1">Tanggal Masuk</label>
+      <p-calendar formControlName="tanggal_masuk" [disabled]="true" styleClass="w-full" dateFormat="yy-mm-dd"
+        class="w-full" />
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">Tanggal Keluar</label>
+      <p-calendar formControlName="tanggal_keluar" styleClass="w-full" dateFormat="yy-mm-dd" class="w-full" />
+    </div>
+
+    <!-- Dropdowns -->
+    <div>
+      <label class="block text-md font-medium mb-1">Cara Masuk</label>
+      <p-dropdown [options]="caraMasukOptions" formControlName="cara_masuk" optionLabel="keterangan"
+        placeholder="Pilih Cara Masuk" class="w-full" styleClass="w-full">
+      </p-dropdown>
+      <div *ngIf="formClaim.get('cara_masuk')?.hasError('required')">
+        <div class="bg-red-50 p-2 rounded-lg"><span class="text-red-400 font-semibold italic">Cara Masuk Wajib di
+            isi</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <label class="block text-md font-medium mb-1">Jenis Rawat</label>
+      <p-dropdown styleClass="w-full" [options]="jenisRawatOptions" formControlName="jenis_rawat"
+        optionLabel="nama_jenis_rawat" placeholder="Pilih Jenis Rawat" class="w-full">
+      </p-dropdown>
+      <div *ngIf="formClaim.get('jenis_rawat')?.hasError('required')">
+        <div class="bg-red-50 p-2 rounded-lg">
+          <span class="text-red-400 font-semibold italic">Jenis Rawat Wajib di isi</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-md font-medium mb-1">Cara Pulang</label>
+      <p-dropdown styleClass="w-full" [options]="caraPulangOptions" optionLabel="cara_pulang"
+        formControlName="cara_pulang" placeholder="Pilih Cara Pulang" class="w-full">
+      </p-dropdown>
+      <div *ngIf="formClaim.get('cara_pulang')?.hasError('required')">
+        <div class="bg-red-50 p-2 rounded-lg"><span class="text-red-400 font-semibold italic">Cara Pulang Wajib di
+            isi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MultiSelects -->
+    <!-- <div class="col-span-2">
+      <label class="block text-md font-medium mb-1">Diagnosa</label>
+      <p-multiSelect styleClass="w-full" [filter]="true" [options]="diagnosaOptions" optionLabel="label" display="chip"
+        formControlName="diagnosa" appendTo="body" [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }"
+        class="w-full" [lazy]="true" pTooltip="{{selectedItemDiagnosa}}" tooltipPosition="top"
+        tooltipStyleClass="wide-tooltip" (onChange)="onChangeDiagnosa($event)" placeholder="Pilih Diagnosa">
+      </p-multiSelect>
+    </div> -->
+    <div class="col-span-2 p-3 ">
+      <div class="grid grid-cols-1  gap-5 w-full">
+        <div class="flex flex-col p-3 shadow-md w-full rounded-lg h-max">
+          <div class="flex flex-row gap-5 w-full items-center">
+            <label class="flex flex-row w-4/12 text-lg font-semibold mb-1">Diagnosa INACBG</label>
+            <p-dropdown [filter]="true" styleClass="w-full" class="w-full" [options]="diagnosaOptions"
+              formControlName="diagnosa" appendTo="body" [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }"
+              optionLabel="label" placeholder="--" (onChange)="handleChangeDiagnosaINACBG($event)"></p-dropdown>
+          </div>
+          <div class="flex flex-col w-full gap-3 px-4 py-7 rounded-lg justify-center"
+            *ngFor="let inacbg of selectedDiagnosaINACBG;trackBy: trackByCode">
+            <div class="flex flex-row gap-4">
+              <div class="flex flex-col">
+                <p class="text-lg italic font-semibold border-b border-gray-400 cursor-pointer"
+                  (click)="handleClickItemDiagnosaINACBG(inacbg)">{{inacbg.label}}</p>
+                <div *ngIf="selected_displayed_inacbg===inacbg" class="mt-2">
+                  <div class="flex flex-row w-full gap-3">
+                    <div class="flex-grow">
+                      <p-dropdown [filter]="true" styleClass="w-max" class="w-full" [options]="diagnosaOptions"
+                         appendTo="body"
+                        [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }" optionLabel="label"
+                        placeholder="Subtitusi" (onChange)="handleChangeSelectedDiagnosa($event)"></p-dropdown>
+                    </div>
+                    <button pButton [label]="'Hapus'" icon="pi pi-times" class="p-button-danger"
+                      (click)="onDeleteSelectedDiagnosaINACBG(inacbg)"></button>
+                    <button *ngIf="inacbg.index !=0" pButton [label]="'Set Primer'" icon="pi pi-star"
+                      class="p-button-warning" (click)="onSetPrimerDiagnosa(inacbg)"></button>
+
+                  </div>
+                </div>
+
+              </div>
+              <p-chip label="{{inacbg.code}}" styleClass="font-semibold"></p-chip>
+              <p class="text-lg text-gray-400 font-semibold">{{inacbg.index != 0 ? 'SEKUNDER' : 'PRIMER'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col p-3 shadow-md rounded-lg h-max">
+          <div class="flex flex-row gap-5 w-full items-center">
+            <label class="flex flex-row w-4/12 text-lg font-semibold mb-1">Diagnosa SIMGOS</label>
+            <!-- <p-dropdown styleClass="w-full" class="w-full"></p-dropdown> -->
+          </div>
+          <div class="flex flex-col w-full gap-3 px-4 py-7 rounded-lg justify-center"
+            *ngFor="let simgos of selectedDiagnosaSimgos">
+            <div class="flex flex-row gap-4">
+              <p class="text-lg italic font-semibold border-b border-gray-400">{{simgos.label}}</p>
+              <p-chip label="{{simgos.code}}" styleClass="font-semibold"></p-chip>
+              <p class="text-lg text-gray-400 font-semibold">{{simgos.index != 0 ? 'SEKUNDER' : 'PRIMER'}}</p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- <p-multiSelect styleClass="w-full" [filter]="true" [options]="diagnosaOptions" optionLabel="nama_icd_10"
+        display="chip"  formControlName="diagnosa_simgos" appendTo="body" [disabled]="true" [readonly]="true"
+        [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }" class="w-full" [lazy]="true"
+        [(ngModel)]="selectedDiagnosaSimgos"
+       >
+      </p-multiSelect> -->
+
+
+    </div>
+
+
+    <div class="col-span-2 p-3 ">
+      <div class="grid grid-cols-1  gap-5 w-full">
+        <div class="flex flex-col p-3 shadow-md w-full rounded-lg h-max">
+          <div class="flex flex-row gap-5 w-full items-center">
+            <label class="flex flex-row w-4/12 text-lg font-semibold mb-1">Procedure INACBG</label>
+            <p-dropdown [filter]="true" styleClass="w-full" class="w-full" [options]="procedureOptions"
+              formControlName="procedure"  placeholder="--" appendTo="body" [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }"
+              optionLabel="label" (onChange)="handleChangeProcedureINACBG($event)"></p-dropdown>
+          </div>
+          <div class="flex flex-col w-full gap-3 px-4 py-7 rounded-lg justify-center"
+            *ngFor="let inacbg of selectedProcedureINACBG;trackBy: trackByCode">
+            <div class="flex flex-row gap-4">
+              <div class="flex flex-col">
+                <p class="text-lg italic font-semibold border-b border-gray-400 cursor-pointer"
+                  (click)="handleClickItemProcedureINACBG(inacbg)">{{inacbg.label}}</p>
+                <div *ngIf="selected_displayed_procedure===inacbg" class="mt-2">
+                  <div class="flex flex-row w-full gap-3">
+                    <div class="flex-grow">
+                      <p-dropdown [filter]="true" styleClass="w-max" class="w-full" [options]="procedureOptions"
+                        appendTo="body"
+                        [panelStyle]="{ 'top': '-200px', 'position': 'absolute' }" optionLabel="label"
+                        placeholder="Subtitusi" (onChange)="handleChangeSelectedProcedure($event)"></p-dropdown>
+                    </div>
+                    <button pButton [label]="'Hapus'" icon="pi pi-times" class="p-button-danger"
+                      (click)="onDeleteSelectedProcedureINACBG(inacbg)"></button>
+                    <button *ngIf="inacbg.index !=0" pButton [label]="'Set Primer'" icon="pi pi-star"
+                      class="p-button-warning" (click)="onSetPrimerProcedure(inacbg)"></button>
+
+                  </div>
+                </div>
+
+              </div>
+              <p-chip label="{{inacbg.code}}" styleClass="font-semibold"></p-chip>
+              <p class="text-lg text-gray-400 font-semibold">{{inacbg.index != 0 ? 'SEKUNDER' : 'PRIMER'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col p-3 shadow-md rounded-lg h-max">
+          <div class="flex flex-row gap-5 w-full items-center">
+            <label class="flex flex-row w-4/12 text-lg font-semibold mb-1">Procedure SIMGOS</label>
+            <!-- <p-dropdown styleClass="w-full" class="w-full"></p-dropdown> -->
+          </div>
+          <div class="flex flex-col w-full gap-3 px-4 py-7 rounded-lg justify-center"
+            *ngFor="let simgos of selectedProcedureSIMGOS">
+            <div class="flex flex-row gap-4">
+              <p class="text-lg italic font-semibold border-b border-gray-400">{{simgos.label}}</p>
+              <p-chip label="{{simgos.code}}" styleClass="font-semibold"></p-chip>
+              <p class="text-lg text-gray-400 font-semibold">{{simgos.index != 0 ? 'SEKUNDER' : 'PRIMER'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- <div class="col-span-2">
+      <label class="block text-md font-medium mb-1">Procedure</label>
+      <p-multiSelect styleClass="w-full" [options]="procedureOptions" optionLabel="label" display="chip"
+        formControlName="procedure" appendTo="body"
+        [panelStyle]="{ 'width':'100%','position': 'absolute','top':'-200px' }" class="w-full"
+        pTooltip="{{selectedItemProcedure}}" tooltipPosition="top" tooltipStyleClass="wide-tooltip"
+        (onChange)="onChangeProcedure($event)" placeholder="Pilih Procedure">
+      </p-multiSelect>
+    </div>
+
+    <div class="col-span-2">
+      <label class="block text-md font-medium mb-1">Procedure SIMGOS</label>
+      <p-multiSelect styleClass="w-full" [options]="procedureOptions" optionLabel="label" display="chip"
+        formControlName="procedure_simgos" appendTo="body" [disabled]="true" [readonly]="true"
+        [panelStyle]="{ 'width':'100%','position': 'absolute','top':'-200px' }" class="w-full"
+        pTooltip="{{selectedItemProcedure}}" tooltipPosition="top" tooltipStyleClass="wide-tooltip">
+      </p-multiSelect>
+    </div> -->
+
+
+    <!-- Submit -->
+
+
+  </form>
+</app-layout>

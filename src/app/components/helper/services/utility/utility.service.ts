@@ -35,6 +35,10 @@ export class UtilityService {
     this.messageService.add({severity:'info',icon:'pi pi-info',summary:'Info',detail:message,closable:true})
   }
 
+  customToast(severty:'success'|'info'|'warning'|'error'|'success'|string,Summary:string,message:string,icon:any):void{
+    this.messageService.add({severity:severty,icon:icon,summary:Summary,detail:message,closable:true})
+  }
+
   onShowLoadingBeforeSend(): void {
     Swal.fire({
       title: 'Tunggu Bentar yaw...',
