@@ -7,7 +7,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { InacbgService } from 'src/app/shared/service/INACBG/inacbg.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ButtonNavModel } from 'src/app/components/models/buttonNavModel';
 import { SetupCaraMasukService } from 'src/app/shared/service/setup-cara-masuk/setup-cara-masuk.service';
 import { SetupJenisRawatService } from 'src/app/shared/service/setup-jenis-rawat/setup-jenis-rawat.service';
@@ -17,6 +17,7 @@ import { UtilityService } from 'src/app/components/helper/services/utility/utili
 import { ChipModule } from 'primeng/chip';
 import { INACBG } from 'src/app/shared/model/inacbg.mode';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-input-claim',
@@ -53,7 +54,7 @@ export class InputClaimComponent implements OnInit, OnDestroy {
   selectedProcedureSIMGOS: any[] = []
 
   selected_displayed_inacbg: any
-  selected_displayed_procedure:any
+  selected_displayed_procedure: any
 
 
   constructor(private formBuilder: FormBuilder,
@@ -63,8 +64,8 @@ export class InputClaimComponent implements OnInit, OnDestroy {
     private setupCaraPulangService: SetupCaraPulangService,
     private setupIcd10Service: SetupIcd10Service,
     private utilityService: UtilityService,
-    private inacbgService:InacbgService,
-    private router:Router
+    private inacbgService: InacbgService,
+    private router: Router
   ) {
 
   }
@@ -81,15 +82,15 @@ export class InputClaimComponent implements OnInit, OnDestroy {
 
   handleClickButtonNav(args: any): void {
     console.log(args)
-    switch(args){
-      case'save':
-      this.onSave()
-      break;
+    switch (args) {
+      case 'save':
+        this.onSave()
+        break;
       case 'back':
         this.onBack()
         break;
-        default:
-          break;
+      default:
+        break;
     }
   }
 
@@ -122,6 +123,11 @@ export class InputClaimComponent implements OnInit, OnDestroy {
 
   }
 
+  daysBetween(d1: Date, d2: Date): number {
+    const calculate = (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24)
+    const result = Math.ceil(calculate)
+    return result;
+  };
   onGetDataINACBG(): void {
     const result = this.inaCBGService.onGetDataClaim()
     console.log(result)
@@ -131,7 +137,16 @@ export class InputClaimComponent implements OnInit, OnDestroy {
     this.formClaim.get('no_sep')?.setValue(result.no_sep)
     this.formClaim.get('nama_pasien')?.setValue(result.nama_pasien)
     this.formClaim.get('tanggal_masuk')?.setValue(new Date(result.tanggal_masuk))
-    this.formClaim.get('tanggal_keluar')?.setValue(new Date(result.tanggl_keluar))
+    this.formClaim.get('tanggal_keluar')?.setValue(!result.tanggal_keluar ? new Date() : new Date(result.tanggl_keluar))
+    const data = this.formClaim.value
+    const masuk = new Date(data.tanggal_masuk)
+    const keluar = new Date(data.tanggal_keluar)
+    console.log(masuk)
+    // console.log(keluar)
+    const days = this.daysBetween(masuk, keluar)
+    console.log(days)
+    console.log(this.formClaim.get('tanggal_keluar')?.value)
+    this.formClaim.get('jumlah_hari')?.setValue(!result.tanggal_keluar ? days : result.tanggal_keluar)
 
     // let trimmedDiagnosa: any = result.diagnosa_simgos.map((d: any) => d.trim());
     // this.selectedDiagnosaSimgos = this.diagnosaOptions.filter((opt: any) =>trimmedDiagnosa.includes(opt.nama_icd_10.trim())
@@ -159,14 +174,15 @@ export class InputClaimComponent implements OnInit, OnDestroy {
       nama_pasien: [''],
       no_sep: [''],
       tanggal_masuk: [null],
-      tanggal_keluar: [''],
+      tanggal_keluar: [new Date()],
       cara_masuk: ['', [Validators.required]],
       jenis_rawat: ['', [Validators.required]],
       cara_pulang: ['', [Validators.required]],
       diagnosa: [[]],
       procedure: [[]],
       diagnosa_simgos: [[]],
-      procedure_simgos: [[]]
+      procedure_simgos: [[]],
+      jumlah_hari: []
     });
   }
 
@@ -177,21 +193,21 @@ export class InputClaimComponent implements OnInit, OnDestroy {
   onChangeProcedure(args: any): void {
 
   }
-// Diagnosa Segments ====================================================================================
+  // Diagnosa Segments ====================================================================================
   handleChangeDiagnosaINACBG(args: any): void {
-    try{
+    try {
       const newItem = {
         code: args.value.kode_icd_10,
         label: args.value.nama_icd_10
       };
-  
+
       // Cek apakah kode sudah ada (untuk hindari duplikat)
       const exists = this.selectedDiagnosaINACBG.some(item => item.code === newItem.code);
       if (exists) return;
-  
+
       // Tambahkan item baru
       this.selectedDiagnosaINACBG.push(newItem);
-  
+
       // Perbarui ulang index semua item
       this.selectedDiagnosaINACBG = this.selectedDiagnosaINACBG.map((item, index) => ({
         ...item,
@@ -199,10 +215,10 @@ export class InputClaimComponent implements OnInit, OnDestroy {
       }));
       this.utilityService.onSuccessToast('Berhasil Tambah Data')
       console.log(this.selectedDiagnosaINACBG);
-    }catch(error){
+    } catch (error) {
       this.utilityService.onFailedToast(error)
     }
-    
+
 
   }
 
@@ -226,7 +242,7 @@ export class InputClaimComponent implements OnInit, OnDestroy {
     }
     console.log(this.selectedDiagnosaINACBG)
 
-    this.utilityService.customToast('warn','Info',inacbg.label + 'Set Primer','pi pi-star')
+    this.utilityService.customToast('warn', 'Info', inacbg.label + 'Set Primer', 'pi pi-star')
   }
 
   onDeleteSelectedDiagnosaINACBG(inacbg: any): void {
@@ -239,19 +255,19 @@ export class InputClaimComponent implements OnInit, OnDestroy {
     // this.selectedDiagnosaINACBG.splice(inacbg.index, 1)
     // this.selected_displayed_inacbg = null
 
-        // Hapus item dari array
-  this.selectedDiagnosaINACBG = this.selectedDiagnosaINACBG.filter(item => item.code !== inacbg.code);
+    // Hapus item dari array
+    this.selectedDiagnosaINACBG = this.selectedDiagnosaINACBG.filter(item => item.code !== inacbg.code);
 
-  // Perbarui ulang index semua item
-  this.selectedDiagnosaINACBG = this.selectedDiagnosaINACBG.map((item, index) => ({
-    ...item,
-    index: index
-  }));
+    // Perbarui ulang index semua item
+    this.selectedDiagnosaINACBG = this.selectedDiagnosaINACBG.map((item, index) => ({
+      ...item,
+      index: index
+    }));
     console.log("AFTER DLETE==>", this.selectedDiagnosaINACBG)
     console.log(this.selectedItemDiagnosa)
     console.log(this.selected_displayed_inacbg)
 
-    this.utilityService.customToast('error','Perhatian',inacbg.label + 'Berhasil Delete','pi pi-exclamation-triangle')
+    this.utilityService.customToast('error', 'Perhatian', inacbg.label + 'Berhasil Delete', 'pi pi-exclamation-triangle')
   }
 
   trackByCode(index: number, item: any) {
@@ -315,15 +331,15 @@ export class InputClaimComponent implements OnInit, OnDestroy {
   onDeleteSelectedProcedureINACBG(inacbg: any): void {
     this.selectedProcedureINACBG = this.selectedProcedureINACBG.filter(item => item.code !== inacbg.code);
 
-  // Perbarui ulang index semua item
-  this.selectedProcedureINACBG = this.selectedProcedureINACBG.map((item, index) => ({
-    ...item,
-    index: index
-  }));
-    
-    this.utilityService.customToast('error','Perhatian',inacbg.label + 'Berhasil Delete','pi pi-exclamation-triangle')
+    // Perbarui ulang index semua item
+    this.selectedProcedureINACBG = this.selectedProcedureINACBG.map((item, index) => ({
+      ...item,
+      index: index
+    }));
 
-  console.log("AFTER DLETE==>", this.selectedProcedureINACBG)
+    this.utilityService.customToast('error', 'Perhatian', inacbg.label + 'Berhasil Delete', 'pi pi-exclamation-triangle')
+
+    console.log("AFTER DLETE==>", this.selectedProcedureINACBG)
 
   }
 
@@ -340,66 +356,71 @@ export class InputClaimComponent implements OnInit, OnDestroy {
         item.index = idx;
       });
     }
-    this.utilityService.customToast('warn','Info',inacbg.label + 'Set Primer','pi pi-star')
+    this.utilityService.customToast('warn', 'Info', inacbg.label + 'Set Primer', 'pi pi-star')
     console.log(this.selectedProcedureINACBG)
   }
 
-  onBack():void{
+  onBack(): void {
     this.router.navigateByUrl('')
   }
 
   //Save Segmentes
 
-  onSave():void{
-    const kode_icd_10_icacbg  = this.selectedDiagnosaINACBG.map((item:any) => item.code);
-    const nama_icd_10_icacbg  = this.selectedDiagnosaINACBG.map((item:any) => item.label);
-    const kode_icd_9_icacbg   = this.selectedProcedureINACBG.map((item:any) => item.code);
-    const nama_icd_9_icacbg   = this.selectedProcedureINACBG.map((item:any) => item.label);
+  onSave(): void {
+    const kode_icd_10_icacbg = this.selectedDiagnosaINACBG.map((item: any) => item.code);
+    const nama_icd_10_icacbg = this.selectedDiagnosaINACBG.map((item: any) => item.label);
+    const kode_icd_9_icacbg = this.selectedProcedureINACBG.map((item: any) => item.code);
+    const nama_icd_9_icacbg = this.selectedProcedureINACBG.map((item: any) => item.label);
 
     const form = this.formClaim.value
-     console.log(this.formClaim)
-        let payload:INACBG.CLAIMINACBG = {
-          no_pendaftaran  : form.no_pendaftaran,
-          nik             : form.nik,
-          no_rm           : form.no_rm,
-          nama_pasien     : form.nama_pasien,
-          no_sep          : form.no_sep,
-          no_kartu        : form.no_kartu,
-          nilai_klaim: this.inaCBGService.SelectedDataClaimObserver.value.nilai_klaim,
-          nilai_billing: this.inaCBGService.SelectedDataClaimObserver.value.nilai_billing,
-          selisih_persen: this.inaCBGService.SelectedDataClaimObserver.value.selisih_persen,
-          jumlah_hari: this.inaCBGService.SelectedDataClaimObserver.value.jumlah_hari | 0,
-          tanggal_masuk: form.tanggal_masuk,
-          tanggl_keluar: form.tanggal_keluar,
-          kode_icd10_inacbg: kode_icd_10_icacbg,
-          kode_icd10_simgos: this.inaCBGService.SelectedDataClaimObserver.value.kode_icd10_simgos,
-          diagnosa_inacbg: nama_icd_10_icacbg,
-          diagnosa_simgos: this.inaCBGService.SelectedDataClaimObserver.value.diagnosa_simgos,
-          kode_icd9_inacbg: kode_icd_9_icacbg,
-          kode_icd9_simgos: this.inaCBGService.SelectedDataClaimObserver.value.kode_icd9_simgos,
-          procedure_inacbg: nama_icd_9_icacbg,
-          procedure_simgos: this.inaCBGService.SelectedDataClaimObserver.value.procedure_simgos,
-          jenis_rawat: form.jenis_rawat.nama_jenis_rawat,
-          kode_jenis_rawat: form.jenis_rawat.kode_jenis_rawat,
-          cara_masuk: form.cara_masuk.nama_cara_masuk,
-          keterangan_cara_masuk: form.cara_masuk.keterangan,
-          cara_pulang: form.cara_pulang.cara_pulang,
-          kode_cara_pulang: form.cara_pulang.kode_cara_pulang
+    console.log(this.formClaim)
+    let payload: INACBG.CLAIMINACBG = {
+      no_pendaftaran: form.no_pendaftaran,
+      nik: form.nik,
+      no_rm: form.no_rm,
+      nama_pasien: form.nama_pasien,
+      no_sep: form.no_sep,
+      no_kartu: form.no_kartu,
+      nilai_klaim: this.inaCBGService.SelectedDataClaimObserver.value.nilai_klaim,
+      nilai_billing: this.inaCBGService.SelectedDataClaimObserver.value.nilai_billing,
+      selisih_persen: this.inaCBGService.SelectedDataClaimObserver.value.selisih_persen,
+      jumlah_hari: this.inaCBGService.SelectedDataClaimObserver.value.jumlah_hari | 0,
+      tanggal_masuk: form.tanggal_masuk,
+      tanggl_keluar: form.tanggal_keluar,
+      kode_icd10_inacbg: kode_icd_10_icacbg,
+      kode_icd10_simgos: this.inaCBGService.SelectedDataClaimObserver.value.kode_icd10_simgos,
+      diagnosa_inacbg: nama_icd_10_icacbg,
+      diagnosa_simgos: this.inaCBGService.SelectedDataClaimObserver.value.diagnosa_simgos,
+      kode_icd9_inacbg: kode_icd_9_icacbg,
+      kode_icd9_simgos: this.inaCBGService.SelectedDataClaimObserver.value.kode_icd9_simgos,
+      procedure_inacbg: nama_icd_9_icacbg,
+      procedure_simgos: this.inaCBGService.SelectedDataClaimObserver.value.procedure_simgos,
+      jenis_rawat: form.jenis_rawat.nama_jenis_rawat,
+      kode_jenis_rawat: form.jenis_rawat.kode_jenis_rawat,
+      cara_masuk: form.cara_masuk.nama_cara_masuk,
+      keterangan_cara_masuk: form.cara_masuk.keterangan,
+      cara_pulang: form.cara_pulang.cara_pulang,
+      kode_cara_pulang: form.cara_pulang.kode_cara_pulang
+    }
+
+    console.log(JSON.stringify(payload))
+    this.utilityService.onShowLoadingBeforeSend()
+    setTimeout(() => {
+      this.inacbgService.onClaimINACBG(payload).subscribe(result => {
+        Swal.close()
+        console.log(result)
+        if (result.responseResult) {
+          this.resetClaimForm()
+          this.utilityService.onShowingCustomAlert('success', 'Yeayy Berhasil Claim nih', result.message)
+            .then(() => {
+              this.onBack()
+            })
+        } else {
+          this.utilityService.onFailedToast(result.message)
         }
-    
-        console.log(JSON.stringify(payload))
-          this.inacbgService.onClaimINACBG(payload).subscribe(result=>{
-            console.log(result)
-            if(result.responseResult){
-             this.resetClaimForm()
-              this.utilityService.onShowingCustomAlert('success','Yeayy Berhasil Claim nih',result.message)
-              .then(()=>{
-               this.onBack()
-              })
-            }else{
-              this.utilityService.onFailedToast(result.message)
-            }
-          })
+      })
+    }, 1500)
+
   }
 
 
